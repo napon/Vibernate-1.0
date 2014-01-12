@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dip"
+    android:background="#000" >
+
+    <RelativeLayout
+        android:id="@+id/notification"
+        android:layout_width="10dip"
+        android:layout_height="match_parent"
+        android:background="#ED1878" >
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/time_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/notification"
+        android:text="9:30am" />
+
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dip"
+        android:layout_toRightOf="@+id/time_start"
+        android:text="MWF" />
+
+    <TextView
+        android:id="@+id/time_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dip"
+        android:text="11:30am" />
+
+</RelativeLayout>
