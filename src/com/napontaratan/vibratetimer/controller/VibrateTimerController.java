@@ -7,10 +7,25 @@ import com.napontaratan.vibratetimer.model.VibrateTimer;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 
 public class VibrateTimerController {
+	private static final BroadcastReceiver ALARM_ON = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+			audio.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+		}
+	};
+	private static final BroadcastReceiver ALARM_OFF = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+			audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+		}
+	};
+	
 	
 	AlarmManager am; // using AlarmManager to trigger an event at the specified time
 	Activity parent;
@@ -25,15 +40,20 @@ public class VibrateTimerController {
 	 * a repeating ringtone service at the end time
 	 * @param vt is the vibrateAlarm object to create a timer for
 	 */
-	public void createVibrateTimer(VibrateTimer vt){
+	public void createVibrateTimer(VibrateTimer vt, Context context){
 		int numberOfAlarms = vt.getNumberOfRepeatingDays();
 		for(int i = 0; i < numberOfAlarms; i++){
 			int id = vt.hashCode() + i;   
 			Calendar startTime = vt.getStartTime();
-			Intent activateVibration = new Intent(); //TODO: do the actual setting phone to vibrate here;
-			PendingIntent startVibrating = PendingIntent.getBroadcast(parent.getApplicationContext(), id, activateVibration, PendingIntent.FLAG_ONE_SHOT);
-			am.setRepeating(AlarmManager.RTC, 10000, 604800000, startVibrating); //TODO: 10000 needs to be changed, currently go on vibrate after 10 seconds;
+			Intent activateVibration = new Intent(context, ALARM_ON.getClass()); //TODO: check if this works!!
+			createSystemTimer(startTime.getTimeInMillis(), id, activateVibration);
 		}
+	}
+	
+	private void createSystemTimer(long time, int id, Intent intent){
+		PendingIntent startVibrating = PendingIntent.getBroadcast(parent.getApplicationContext(),
+				id, intent, PendingIntent.FLAG_ONE_SHOT);
+		am.setRepeating(AlarmManager.RTC, time, 604800000, startVibrating); 
 	}
 	
 	/**
@@ -43,16 +63,7 @@ public class VibrateTimerController {
 	public void cancelVibrateTimer(VibrateTimer vt){
 		
 	}
-	
-	/**
-	 * 
-	 * @param oldvt vibrateAlarm object to change
-	 * @param newvt vibrateAlarm object to change to
-	 */
-	public void editAlarm(VibrateTimer oldvt, VibrateTimer newvt){
-		cancelVibrateTimer(oldvt);
-		createVibrateTimer(newvt);
-	}
+
 	
 }
 
