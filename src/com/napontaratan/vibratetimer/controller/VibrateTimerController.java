@@ -14,6 +14,7 @@ public class VibrateTimerController {
 	
 	AlarmManager am; // using AlarmManager to trigger an event at the specified time
 	Activity parent;
+	private static final int WEEK_MILLISECONDS = 604800000;
 	
 	public VibrateTimerController(Activity ac){
 		am = (AlarmManager) ac.getSystemService(Context.ALARM_SERVICE);
@@ -32,8 +33,16 @@ public class VibrateTimerController {
 			Calendar startTime = vt.getStartTime();
 			Intent activateVibration = new Intent(); //TODO: do the actual setting phone to vibrate here;
 			PendingIntent startVibrating = PendingIntent.getBroadcast(parent.getApplicationContext(), id, activateVibration, PendingIntent.FLAG_ONE_SHOT);
-			am.setRepeating(AlarmManager.RTC, 10000, 604800000, startVibrating); //TODO: 10000 needs to be changed, currently go on vibrate after 10 seconds;
+			am.setRepeating(AlarmManager.RTC, startTime.getTimeInMillis(), WEEK_MILLISECONDS, startVibrating);
 		}
+	}
+	
+	public void createSystemTimer(){
+		// do something
+	}
+	
+	public void removeSystemTimer(){
+		// do something
 	}
 	
 	/**
@@ -44,15 +53,6 @@ public class VibrateTimerController {
 		
 	}
 	
-	/**
-	 * 
-	 * @param oldvt vibrateAlarm object to change
-	 * @param newvt vibrateAlarm object to change to
-	 */
-	public void editAlarm(VibrateTimer oldvt, VibrateTimer newvt){
-		cancelVibrateTimer(oldvt);
-		createVibrateTimer(newvt);
-	}
 	
 }
 
