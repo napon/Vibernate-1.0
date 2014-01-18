@@ -321,10 +321,12 @@ int layout abs__search_dropdown_item_icons_2line 0x7f030012
 int layout abs__search_view 0x7f030013
 int layout abs__simple_dropdown_hint 0x7f030014
 int layout activity_main 0x7f030015
-int layout sherlock_spinner_dropdown_item 0x7f030016
-int layout sherlock_spinner_item 0x7f030017
-int layout vibrate 0x7f030018
+int layout activity_set_timer 0x7f030016
+int layout sherlock_spinner_dropdown_item 0x7f030017
+int layout sherlock_spinner_item 0x7f030018
+int layout vibrate 0x7f030019
 int menu main 0x7f0b0000
+int menu set_timer 0x7f0b0001
 int string abs__action_bar_home_description 0x7f090000
 int string abs__action_bar_up_description 0x7f090001
 int string abs__action_menu_overflow_description 0x7f090002
@@ -341,6 +343,7 @@ int string abs__shareactionprovider_share_with_application 0x7f090007
 int string action_settings 0x7f09000e
 int string app_name 0x7f09000d
 int string hello_world 0x7f09000f
+int string title_activity_set_timer 0x7f090010
 int style AppBaseTheme 0x7f0a0059
 int style AppTheme 0x7f0a005a
 int style Sherlock___TextAppearance_Small 0x7f0a0046

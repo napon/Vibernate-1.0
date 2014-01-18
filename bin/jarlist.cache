@@ -1,8 +1,5 @@
 # cache for current jar dependency. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
-<<<<<<< HEAD
 1389482723000 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 /Users/daniel/Documents/workspace/JakeWharton-ActionBarSherlock-5a15d92/actionbarsherlock/libs/android-support-v4.jar
 1389482723000 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 /Users/daniel/Documents/workspace/VibrateTimer/libs/android-support-v4.jar
-=======
->>>>>>> 49df0a2f787fc3f4bcdb24a63e7ad11b54ad1798

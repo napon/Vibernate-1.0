@@ -9,7 +9,6 @@ package com.napontaratan.vibratetimer;
 
 public final class R {
     public static final class attr {
-<<<<<<< HEAD
         /**  Custom divider drawable to use for elements in the action bar. 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
@@ -789,17 +788,12 @@ containing a value of this type.
         /**  Minimum width of the search view text entry area. 
          */
         public static final int abs__search_view_text_min_width=0x7f07000b;
-=======
-    }
-    public static final class dimen {
->>>>>>> 49df0a2f787fc3f4bcdb24a63e7ad11b54ad1798
         /**  Default screen margins, per the Android Design guidelines. 
 
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-<<<<<<< HEAD
         public static final int activity_horizontal_margin=0x7f07000f;
         public static final int activity_vertical_margin=0x7f070010;
     }
@@ -1002,12 +996,14 @@ containing a value of this type.
         public static final int abs__search_view=0x7f030013;
         public static final int abs__simple_dropdown_hint=0x7f030014;
         public static final int activity_main=0x7f030015;
-        public static final int sherlock_spinner_dropdown_item=0x7f030016;
-        public static final int sherlock_spinner_item=0x7f030017;
-        public static final int vibrate=0x7f030018;
+        public static final int activity_set_timer=0x7f030016;
+        public static final int sherlock_spinner_dropdown_item=0x7f030017;
+        public static final int sherlock_spinner_item=0x7f030018;
+        public static final int vibrate=0x7f030019;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;
+        public static final int set_timer=0x7f0b0001;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1052,27 +1048,7 @@ containing a value of this type.
         public static final int action_settings=0x7f09000e;
         public static final int app_name=0x7f09000d;
         public static final int hello_world=0x7f09000f;
-=======
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
-    }
-    public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-    }
-    public static final class id {
-        public static final int action_settings=0x7f080000;
-    }
-    public static final class layout {
-        public static final int activity_main=0x7f030000;
-    }
-    public static final class menu {
-        public static final int main=0x7f070000;
-    }
-    public static final class string {
-        public static final int action_settings=0x7f050001;
-        public static final int app_name=0x7f050000;
-        public static final int hello_world=0x7f050002;
->>>>>>> 49df0a2f787fc3f4bcdb24a63e7ad11b54ad1798
+        public static final int title_activity_set_timer=0x7f090010;
     }
     public static final class style {
         /** 
@@ -1094,7 +1070,6 @@ containing a value of this type.
         AppBaseTheme from BOTH res/values/styles.xml and
         res/values-v11/styles.xml on API 14+ devices.
     
-<<<<<<< HEAD
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">  
  API 14 theme customizations can go here. 
          */
@@ -3363,14 +3338,4 @@ containing a value of this type.
         */
         public static final int SherlockView_android_focusable = 0;
     };
-=======
- API 14 theme customizations can go here. 
-         */
-        public static final int AppBaseTheme=0x7f060000;
-        /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
-         */
-        public static final int AppTheme=0x7f060001;
-    }
->>>>>>> 49df0a2f787fc3f4bcdb24a63e7ad11b54ad1798
 }
