@@ -13,19 +13,8 @@ import android.content.Intent;
 import android.media.AudioManager;
 
 public class VibrateTimerController {
-	private static final BroadcastReceiver ALARM_ON = new BroadcastReceiver() {
-		public void onReceive(Context context, Intent intent) {
-			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-			audio.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-		}
-	};
-	private static final BroadcastReceiver ALARM_OFF = new BroadcastReceiver() {
-		public void onReceive(Context context, Intent intent) {
-			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-			audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-		}
-	};
 	
+
 	
 	AlarmManager am; // using AlarmManager to trigger an event at the specified time
 	Activity parent;
@@ -43,9 +32,9 @@ public class VibrateTimerController {
 	public void createVibrateTimer(VibrateTimer vt, Context context){
 		int numberOfAlarms = vt.getNumberOfRepeatingDays();
 		for(int i = 0; i < numberOfAlarms; i++){
-			int id = vt.hashCode() + i;   
+			int id = vt.hashCode() + i;
 			Calendar startTime = vt.getStartTime();
-			Intent activateVibration = new Intent(context, ALARM_ON.getClass()); //TODO: check if this works!!
+			Intent activateVibration = new Intent(context, VibrateOnBroadcastReceiver.class);
 			createSystemTimer(startTime.getTimeInMillis(), id, activateVibration);
 		}
 	}
@@ -64,7 +53,19 @@ public class VibrateTimerController {
 		
 	}
 
+	private static final class VibrateOnBroadcastReceiver extends BroadcastReceiver {
+		public void onReceive(Context context, Intent intent) {
+			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+			audio.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+		}
+	}
 	
+	private static final class VibrateOffBroadcastReceiver extends BroadcastReceiver {
+		public void onReceive(Context context, Intent intent) {
+			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+			audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+		}
+	}
 }
 
 
