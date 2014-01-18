@@ -46,20 +46,6 @@ public class VibrateTimerController {
 		for(int i = 0; i < numberOfAlarms; i++){
 			int id = vt.hashCode() + i;   
 			Calendar startTime = vt.getStartTime();
-<<<<<<< HEAD
-			Intent activateVibration = new Intent(); //TODO: do the actual setting phone to vibrate here;
-			PendingIntent startVibrating = PendingIntent.getBroadcast(parent.getApplicationContext(), id, activateVibration, PendingIntent.FLAG_ONE_SHOT);
-			am.setRepeating(AlarmManager.RTC, startTime.getTimeInMillis(), WEEK_MILLISECONDS, startVibrating);
-		}
-	}
-	
-	public void createSystemTimer(){
-		// do something
-	}
-	
-	public void removeSystemTimer(){
-		// do something
-=======
 			Intent activateVibration = new Intent(context, ALARM_ON.getClass()); //TODO: check if this works!!
 			createSystemTimer(startTime.getTimeInMillis(), id, activateVibration);
 		}
@@ -69,7 +55,6 @@ public class VibrateTimerController {
 		PendingIntent startVibrating = PendingIntent.getBroadcast(parent.getApplicationContext(),
 				id, intent, PendingIntent.FLAG_ONE_SHOT);
 		am.setRepeating(AlarmManager.RTC, time, 604800000, startVibrating); 
->>>>>>> 7bc43a0510e1931b75d67bc607dde64865d51365
 	}
 	
 	/**
@@ -79,11 +64,6 @@ public class VibrateTimerController {
 	public void cancelVibrateTimer(VibrateTimer vt){
 		
 	}
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> 7bc43a0510e1931b75d67bc607dde64865d51365
 	
 }
 
