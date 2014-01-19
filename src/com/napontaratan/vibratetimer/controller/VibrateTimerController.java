@@ -13,6 +13,7 @@ import android.media.AudioManager;
 
 public class VibrateTimerController {
 	
+
 	private static final int WEEK_MILLISECONDS = 604800000;
 	
 	private AlarmManager am; 
@@ -33,9 +34,9 @@ public class VibrateTimerController {
 		for(int i = 0; i < numberOfAlarms; i++){
 			int id = vt.getId() + numberToIncrement(i, vt);   
 			Calendar startTime = calendarAtIteration(i, vt);
-			Intent activateVibration = new Intent(context, EnableAlarmBroadcastReceiver.class); 
+			Intent activateVibration = new Intent(context, VibrateOnBroadcastReceiver.class); 
 			createSystemTimer(startTime.getTimeInMillis(), id, activateVibration);
-			Intent disableVibration = new Intent(context, DisableAlarmBroadcastReceiver.class);
+			Intent disableVibration = new Intent(context, VibrateOffBroadcastReceiver.class);
 			createSystemTimer(startTime.getTimeInMillis(), id, disableVibration);
 		}
 	}
@@ -49,8 +50,8 @@ public class VibrateTimerController {
 		for(int i = 0; i < vt.getNumberOfRepeatingDays(); i++){
 			int id = vt.getId() + numberToIncrement(i,vt);
 			Intent[] things = new Intent[2];
-			things[0] = new Intent(context, EnableAlarmBroadcastReceiver.class);
-			things[1] = new Intent(context, DisableAlarmBroadcastReceiver.class);
+			things[0] = new Intent(context, VibrateOnBroadcastReceiver.class);
+			things[1] = new Intent(context, VibrateOffBroadcastReceiver.class);
 			PendingIntent pi = PendingIntent.getActivities(parent.getApplicationContext(), id, things, PendingIntent.FLAG_CANCEL_CURRENT);
 			am.cancel(pi);
 		}
@@ -102,16 +103,15 @@ public class VibrateTimerController {
 		}
 		return null;  //error;
 	}
-	
-	private class EnableAlarmBroadcastReceiver extends BroadcastReceiver {
-		@Override
+
+	private static final class VibrateOnBroadcastReceiver extends BroadcastReceiver {
 		public void onReceive(Context context, Intent intent) {
 			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 			audio.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
 		}
 	}
-	private class DisableAlarmBroadcastReceiver extends BroadcastReceiver {
-		@Override
+	
+	private class VibrateOffBroadcastReceiver extends BroadcastReceiver {
 		public void onReceive(Context context, Intent intent) {
 			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 			audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
