@@ -18,6 +18,7 @@ public class VibrateTimerController {
 	
 	AlarmManager am; // using AlarmManager to trigger an event at the specified time
 	Activity parent;
+	private static final int WEEK_MILLISECONDS = 604800000;
 	
 	public VibrateTimerController(Activity ac){
 		am = (AlarmManager) ac.getSystemService(Context.ALARM_SERVICE);
