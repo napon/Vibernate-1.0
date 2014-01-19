@@ -22,10 +22,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity
             android:name="com.napontaratan.vibratetimer.SetTimerActivity"
             android:label="@string/title_activity_set_timer" >
         </activity>
+=======
+>>>>>>> origin
     </application>
 
 </manifest>
