@@ -4,24 +4,31 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class VibrateTimer {
-
+	
 	private Calendar startTime;
 	private Calendar endTime;
 	private boolean isActive;
-	private boolean [] days = new boolean [7];
+	private int id;
+	private Calendar [] days = new Calendar [7];
+
 
 
 	/**
 	 * Constructor
 	 */
-	public VibrateTimer (Calendar startTime, Calendar endTime, boolean isActive ) {
+	public VibrateTimer (Calendar startTime, Calendar endTime, boolean isActive, Calendar[] days, int id) {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.isActive = isActive;
 		isActive = false;
+		this.days = days;
+		this.id = id;
 	}
 
-	// Getter
+	public int getId(){
+		return id;
+	}
+	
 	public Calendar getEndTime() {
 		return endTime;
 	}
@@ -33,7 +40,11 @@ public class VibrateTimer {
 	public boolean getIsActive() {
 		return isActive;
 	}
-
+	
+	public Calendar [] getDays() {
+		return days;
+	}
+	
 	// Setter
 	public void setEndTime(Calendar endTime) {
 		this.endTime = endTime;
@@ -46,6 +57,10 @@ public class VibrateTimer {
 
 	public void setIsActivate (boolean isActive) {
 		this.isActive = isActive;
+	}
+	
+	public void setDays (Calendar [] days) {
+		this.days = days;
 	}
 
 
@@ -96,7 +111,6 @@ public class VibrateTimer {
 
 		System.out.println("this is the endTest: " + endTest);
 		return endTest;
-
 	}
 
 	/**
@@ -105,39 +119,39 @@ public class VibrateTimer {
 	 * @return String
 	 */
 	public String getRepeatingDays() {
-
 		String wantedDate = "";
 
-		if ( days [0]) {
+		if (days[0] != null) {
 			wantedDate = wantedDate + "M";
 		}
 
-		if (days [1]) {
-			wantedDate = wantedDate + " T";
+		if (days[1] != null) {
+			wantedDate = wantedDate + "T";
 		}
 
-		if ( days [2]) {
-			wantedDate = wantedDate + " W";
+		if (days[2] != null) {
+			wantedDate = wantedDate + "W";
 		}
 
-		if ( days [3]) {
-			wantedDate = wantedDate + " Th";
+		if (days[3] !=  null) {
+			wantedDate = wantedDate + "Th";
 		}
 
-		if ( days [4]) {
-			wantedDate = wantedDate + " F";
+		if (days[4] != null) {
+			wantedDate = wantedDate + "F";
 		}
 
-		if ( days [5]) {
-			wantedDate = wantedDate + " Sat";
+		if (days[5] != null) {
+			wantedDate = wantedDate + "Sat";
 		}
 
-		if ( days [6]) {
-			wantedDate = wantedDate + " Sun";
+		if (days[6] != null) {
+			wantedDate = wantedDate + "Sun";
 		}
-
 		return wantedDate;
 	}
+
+
 
 	/**
 	 * Get the number of repeatingDays
@@ -146,37 +160,38 @@ public class VibrateTimer {
 	 */
 	public Integer getNumberOfRepeatingDays () {
 		Integer numberOfRepeatingDays = 0;
-		
-		if ( days [0]) {
+
+		if ( days [0] != null) {
 			numberOfRepeatingDays = numberOfRepeatingDays + 1;
 		}
 
-		if (days [1]) {
+		if (days [1] != null) {
 			numberOfRepeatingDays = numberOfRepeatingDays + 1;
 		}
 
-		if ( days [2]) {
+		if ( days [2] != null) {
 			numberOfRepeatingDays = numberOfRepeatingDays + 1;
 		}
 
-		if ( days [3]) {
+		if ( days [3] != null) {
 			numberOfRepeatingDays = numberOfRepeatingDays + 1;
 		}
 
-		if ( days [4]) {
+		if ( days [4] != null) {
 			numberOfRepeatingDays = numberOfRepeatingDays + 1;
 		}
 
-		if ( days [5]) {
+		if ( days [5] != null) {
 			numberOfRepeatingDays = numberOfRepeatingDays + 1;
 		}
 
-		if ( days [6]) {
+		if ( days [6] != null) {
 			numberOfRepeatingDays = numberOfRepeatingDays + 1;
 		}
-		
+
 		return numberOfRepeatingDays;
-		
+
 	}
 
 }
+
