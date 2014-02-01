@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 		ListView listOfVibrates = (ListView) findViewById(R.id.vibrates);
 		if(vibrateTimers == null)
 			vibrateTimers = new ArrayList<VibrateTimer>();
-		vibrateTimers.add(new VibrateTimer(null,null,false,null,0));
+		vibrateTimers.add(new VibrateTimer(null,null,null,0));
 		listOfVibrates.setAdapter(new VibrateArrayAdapter(this, R.layout.vibrate, vibrateTimers));
 	}
 
