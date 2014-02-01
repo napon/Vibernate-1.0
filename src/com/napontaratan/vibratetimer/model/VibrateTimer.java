@@ -7,7 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class VibrateTimer implements Serializable{
 	
@@ -15,14 +17,14 @@ public class VibrateTimer implements Serializable{
 	private Calendar endTime;
 	private boolean isActive;
 	private int id;
-	private Calendar [] days = new Calendar [7];
+	private boolean[] days;
 
 
 
 	/**
 	 * Constructor
 	 */
-	public VibrateTimer (Calendar startTime, Calendar endTime, boolean isActive, Calendar[] days, int id) {
+	public VibrateTimer (Calendar startTime, Calendar endTime, boolean isActive, boolean[] days, int id) {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.isActive = isActive;
@@ -47,7 +49,7 @@ public class VibrateTimer implements Serializable{
 		return isActive;
 	}
 	
-	public Calendar [] getDays() {
+	public boolean[] getDays() {
 		return days;
 	}
 	
@@ -65,7 +67,7 @@ public class VibrateTimer implements Serializable{
 		this.isActive = isActive;
 	}
 	
-	public void setDays (Calendar [] days) {
+	public void setDays (boolean[] days) {
 		this.days = days;
 	}
 
@@ -127,38 +129,92 @@ public class VibrateTimer implements Serializable{
 	public String getRepeatingDays() {
 		String wantedDate = "";
 
-		if (days[0] != null) {
-			wantedDate = wantedDate + "M";
+		if (days[1]) {
+			wantedDate = wantedDate + "Mon";
 		}
 
-		if (days[1] != null) {
-			wantedDate = wantedDate + "T";
+		if (days[2]) {
+			wantedDate = wantedDate + "Tue";
 		}
 
-		if (days[2] != null) {
-			wantedDate = wantedDate + "W";
+		if (days[3]) {
+			wantedDate = wantedDate + "Wed";
 		}
 
-		if (days[3] !=  null) {
-			wantedDate = wantedDate + "Th";
+		if (days[4]) {
+			wantedDate = wantedDate + "Thu";
 		}
 
-		if (days[4] != null) {
-			wantedDate = wantedDate + "F";
+		if (days[5]) {
+			wantedDate = wantedDate + "Fri";
 		}
 
-		if (days[5] != null) {
+		if (days[6]) {
 			wantedDate = wantedDate + "Sat";
 		}
 
-		if (days[6] != null) {
+		if (days[0]) {
 			wantedDate = wantedDate + "Sun";
 		}
 		return wantedDate;
 	}
 
-
-
+	public List<Calendar> getStartAlarmCalendars(){
+		List<Calendar> calendars = new ArrayList<Calendar>();
+		for (int i = 0; i < 7; i++) {
+			if (days[i]) {
+				Calendar day = Calendar.getInstance();
+				day.set(Calendar.DAY_OF_WEEK, getDayOfWeekFromInt(i));
+				day.set(Calendar.HOUR_OF_DAY, startTime.get(Calendar.HOUR_OF_DAY));
+				day.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE));
+				day.set(Calendar.SECOND, startTime.get(Calendar.SECOND));
+			}
+		}
+		return calendars;
+	}
+	
+	public List<Calendar> getEndAlarmCalendars() {
+		List<Calendar> calendars = new ArrayList<Calendar>();
+		for (int i = 0; i < 7; i++) {
+			if (days[i]) {
+				Calendar day = Calendar.getInstance();
+				day.set(Calendar.DAY_OF_WEEK, getDayOfWeekFromInt(i));
+				day.set(Calendar.HOUR_OF_DAY, endTime.get(Calendar.HOUR_OF_DAY));
+				day.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE));
+				day.set(Calendar.SECOND, endTime.get(Calendar.SECOND));
+			}
+		}
+		return calendars;
+	}
+	
+	private int getDayOfWeekFromInt(int day) {
+		int dayOfWeek = 0;
+		switch(day) {
+		case 0:
+			dayOfWeek = Calendar.SUNDAY;
+			break;
+		case 1:
+			dayOfWeek = Calendar.MONDAY;
+			break;
+		case 2:
+			dayOfWeek = Calendar.TUESDAY;
+			break;
+		case 3:
+			dayOfWeek = Calendar.WEDNESDAY;
+			break;
+		case 4:
+			dayOfWeek = Calendar.THURSDAY;
+			break;
+		case 5:
+			dayOfWeek = Calendar.FRIDAY;
+			break;
+		case 6:
+			dayOfWeek = Calendar.SATURDAY;
+			break;
+		}
+		return dayOfWeek;
+	}
+	
 	/**
 	 * Get the number of repeatingDays
 	 * 
@@ -166,37 +222,12 @@ public class VibrateTimer implements Serializable{
 	 */
 	public Integer getNumberOfRepeatingDays () {
 		Integer numberOfRepeatingDays = 0;
-
-		if ( days [0] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
+		for (int i = 0; i < 7; i++) {
+			if (days[i]) {
+				numberOfRepeatingDays += 1;
+			}
 		}
-
-		if (days [1] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
-		if ( days [2] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
-		if ( days [3] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
-		if ( days [4] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
-		if ( days [5] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
-		if ( days [6] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
 		return numberOfRepeatingDays;
-
 	}
 	
 	// ========================== //
@@ -219,5 +250,7 @@ public class VibrateTimer implements Serializable{
 		String response = "VibrateTimer id: " + getId() + " isActive: " + getIsActive() + " startTime: " + getStartTime() + " endTime: " + getEndTime() + " repeating on: " + getRepeatingDays();
     	return response;   
     }
+
+
 }
 
