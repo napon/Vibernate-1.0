@@ -24,11 +24,11 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
     
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String CREATE_BOOK_TABLE = "CREATE TABLE alarms ( " +
+		String CREATE_ALARM_TABLE = "CREATE TABLE alarms ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
                 "alarm BLOB )";
 		
-		db.execSQL(CREATE_BOOK_TABLE);
+		db.execSQL(CREATE_ALARM_TABLE);
 	}
 
 	@Override
