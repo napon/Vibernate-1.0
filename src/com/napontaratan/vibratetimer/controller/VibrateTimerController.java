@@ -30,11 +30,12 @@ public class VibrateTimerController {
 	}
 	
 	/**
-	 * start a repeating vibrate service at the start time and
-	 * a repeating ringtone service at the end time
+	 * Start a repeating vibrate service at the start time and
+	 * a repeating ringtone service at the end time 
 	 * @param vt is the vibrateAlarm object to create a timer for
 	 */
-	public void setSystemAlarm(VibrateTimer vt, Context context){
+	public void setAlarm(VibrateTimer vt, Context context){
+		
 		List<Calendar> startTimes = vt.getStartAlarmCalendars();
 		List<Calendar> endTimes = vt.getEndAlarmCalendars();
 		int timerId = vt.getId();
@@ -51,11 +52,11 @@ public class VibrateTimerController {
 	}
 	
 	/**
-	 * cancel the services corresponding to the VibrateTimer object
+	 * Cancel the services corresponding to the VibrateTimer object
 	 * @param vt VibrateTimer object to cancel
 	 */
 	@SuppressLint("NewApi")
-	public void cancelSystemAlarm(VibrateTimer vt, Context context){
+	public void cancelAlarm(VibrateTimer vt, Context context){
 		List<Calendar> times = vt.getStartAlarmCalendars();
 		for(Calendar time : times){
 			int id = vt.getId() + time.get(Calendar.DAY_OF_WEEK);
