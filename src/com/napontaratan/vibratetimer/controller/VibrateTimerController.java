@@ -1,6 +1,8 @@
 package com.napontaratan.vibratetimer.controller;
 
 import java.util.Calendar;
+import java.util.List;
+
 import com.napontaratan.vibratetimer.model.VibrateTimer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -29,15 +31,19 @@ public class VibrateTimerController {
 	 * a repeating ringtone service at the end time
 	 * @param vt is the vibrateAlarm object to create a timer for
 	 */
-	public void createVibrateTimer(VibrateTimer vt, Context context){
-		int numberOfAlarms = vt.getNumberOfRepeatingDays();
-		for(int i = 0; i < numberOfAlarms; i++){
-			int id = vt.getId() + numberToIncrement(i, vt);   
-			Calendar startTime = calendarAtIteration(i, vt);
+	public void setSystemAlarm(VibrateTimer vt, Context context){
+		List<Calendar> startTimes = vt.getStartAlarmCalendars();
+		List<Calendar> endTimes = vt.getEndAlarmCalendars();
+		int timerId = vt.getId();
+		for (Calendar startTime : startTimes) {
+			int id = timerId + startTime.get(Calendar.DAY_OF_WEEK);
 			Intent activateVibration = new Intent(context, VibrateOnBroadcastReceiver.class); 
 			createSystemTimer(startTime.getTimeInMillis(), id, activateVibration);
+		}
+		for(Calendar endTime : endTimes){
+			int id = timerId + endTime.get(Calendar.DAY_OF_WEEK);
 			Intent disableVibration = new Intent(context, VibrateOffBroadcastReceiver.class);
-			createSystemTimer(startTime.getTimeInMillis(), id, disableVibration);
+			createSystemTimer(endTime.getTimeInMillis(), id, disableVibration);
 		}
 	}
 	
@@ -46,13 +52,15 @@ public class VibrateTimerController {
 	 * @param vt VibrateTimer object to cancel
 	 */
 	@SuppressLint("NewApi")
-	public void cancelVibrateTimer(VibrateTimer vt, Context context){
-		for(int i = 0; i < vt.getNumberOfRepeatingDays(); i++){
-			int id = vt.getId() + numberToIncrement(i,vt);
+	public void cancelSystemAlarm(VibrateTimer vt, Context context){
+		List<Calendar> times = vt.getStartAlarmCalendars();
+		for(Calendar time : times){
+			int id = vt.getId() + time.get(Calendar.DAY_OF_WEEK);
 			Intent[] things = new Intent[2];
 			things[0] = new Intent(context, VibrateOnBroadcastReceiver.class);
 			things[1] = new Intent(context, VibrateOffBroadcastReceiver.class);
-			PendingIntent pi = PendingIntent.getActivities(parent.getApplicationContext(), id, things, PendingIntent.FLAG_CANCEL_CURRENT);
+			PendingIntent pi = PendingIntent.getActivities(parent.getApplicationContext(), id, things, 
+					PendingIntent.FLAG_CANCEL_CURRENT);
 			am.cancel(pi);
 		}
 	}
@@ -61,47 +69,6 @@ public class VibrateTimerController {
 		PendingIntent startVibrating = PendingIntent.getBroadcast(parent.getApplicationContext(),
 				id, intent, PendingIntent.FLAG_ONE_SHOT);
 		am.setRepeating(AlarmManager.RTC, time, WEEK_MILLISECONDS, startVibrating); 
-	}
-	
-	
-	/**
-	 * get the number to increment depending on the day, monday = 0, tuesday = 1, etc.
-	 * used to calculate the correct id for each alarm
-	 * @param iteration the ith day
-	 * @param vt object to get the day for
-	 * @return the correct incrementation for different day, monday = 0, tuesday = 1, etc.
-	 */
-	private int numberToIncrement(int iteration, VibrateTimer vt){
-		int count = iteration + 1;
-		Calendar[] alarmArray = vt.getDays();
-		for (int i = 0; i < 6; i++){
-			if(alarmArray[i] != null){
-				count--;
-				if(count == 0)
-					return i;
-			}
-		}
-		return -1;  //error;
-	}
-	
-	/**
-	 * return the ith valid calendar in vt
-	 * eg. if alarm on monday wednesday and friday and iteration = 1, then return calendar object for wednesday
-	 * @param iteration
-	 * @param vt
-	 * @return
-	 */
-	private Calendar calendarAtIteration(int iteration, VibrateTimer vt){
-		int count = iteration + 1;
-		Calendar[] alarmArray = vt.getDays();
-		for (int i = 0; i < 6; i++){
-			if(alarmArray[i] != null){
-				count--;
-				if(count == 0)
-					return alarmArray[i];
-			}
-		}
-		return null;  //error;
 	}
 
 	private static final class VibrateOnBroadcastReceiver extends BroadcastReceiver {
