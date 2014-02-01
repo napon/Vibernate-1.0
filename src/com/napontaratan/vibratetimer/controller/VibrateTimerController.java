@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.napontaratan.vibratetimer.model.VibrateTimer;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -11,7 +12,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.preference.PreferenceManager;
 
 public class VibrateTimerController {
 	
@@ -83,6 +86,18 @@ public class VibrateTimerController {
 			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 			audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
 		}
+	}
+	
+	public static int generateNextId(Context context) {
+		SharedPreferences prefs = context.getSharedPreferences("idcounter", Context.MODE_PRIVATE);
+		int counter = prefs.getInt("idcounter", -1);
+			if(counter == -1) {
+				counter = 0;
+				prefs.edit().putInt("idcounter", counter);
+			} else {
+				counter = counter + 10;
+			}
+		return counter;
 	}
 }
 
