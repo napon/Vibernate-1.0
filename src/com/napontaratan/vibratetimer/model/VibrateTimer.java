@@ -13,22 +13,17 @@ import java.util.List;
 
 public class VibrateTimer implements Serializable{
 	
-	private Calendar startTime;
-	private Calendar endTime;
-	private boolean isActive;
-	private int id;
-	private boolean[] days;
-
-
+	private final Calendar startTime;
+	private final Calendar endTime;
+	private final int id;
+	private final boolean[] days;
 
 	/**
 	 * Constructor
 	 */
-	public VibrateTimer (Calendar startTime, Calendar endTime, boolean isActive, boolean[] days, int id) {
+	public VibrateTimer (Calendar startTime, Calendar endTime, boolean[] days, int id) {
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.isActive = isActive;
-		isActive = false;
 		this.days = days;
 		this.id = id;
 	}
@@ -44,35 +39,10 @@ public class VibrateTimer implements Serializable{
 	public Calendar getStartTime() {
 		return startTime;
 	}
-
-	public boolean getIsActive() {
-		return isActive;
-	}
 	
 	public boolean[] getDays() {
 		return days;
 	}
-	
-	// Setter
-	public void setEndTime(Calendar endTime) {
-		this.endTime = endTime;
-	}
-
-	public void setStartTime (Calendar startTime) {
-		this.startTime = startTime;
-
-	}
-
-	public void setIsActivate (boolean isActive) {
-		this.isActive = isActive;
-	}
-	
-	public void setDays (boolean[] days) {
-		this.days = days;
-	}
-
-
-
 
 	/**
 	 * Convert startTime as Calendar into String with proper dateFormat
@@ -96,9 +66,6 @@ public class VibrateTimer implements Serializable{
 		return startTest;
 
 	}
-
-
-
 
 	/**
 	 * Convert endTIme as Calendar into String with proper dateFormat
@@ -247,7 +214,7 @@ public class VibrateTimer implements Serializable{
     
     @Override
     public String toString() {  // for testing purposes
-		String response = "VibrateTimer id: " + getId() + " isActive: " + getIsActive() + " startTime: " + getStartTime() + " endTime: " + getEndTime() + " repeating on: " + getRepeatingDays();
+		String response = "VibrateTimer id: " + getId() + " startTime: " + getStartTime() + " endTime: " + getEndTime() + " repeating on: " + getRepeatingDays();
     	return response;   
     }
 
