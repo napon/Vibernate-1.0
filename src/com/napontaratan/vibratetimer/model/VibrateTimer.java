@@ -15,14 +15,14 @@ public class VibrateTimer implements Serializable{
 	private Calendar endTime;
 	private boolean isActive;
 	private int id;
-	private boolean[] days;
+	private Calendar [] days = new Calendar [7];
 
 
 
 	/**
 	 * Constructor
 	 */
-	public VibrateTimer (Calendar startTime, Calendar endTime, boolean isActive, boolean[] days, int id) {
+	public VibrateTimer (Calendar startTime, Calendar endTime, boolean isActive, Calendar[] days, int id) {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.isActive = isActive;
@@ -47,7 +47,7 @@ public class VibrateTimer implements Serializable{
 		return isActive;
 	}
 	
-	public boolean[] getDays() {
+	public Calendar [] getDays() {
 		return days;
 	}
 	
@@ -65,7 +65,7 @@ public class VibrateTimer implements Serializable{
 		this.isActive = isActive;
 	}
 	
-	public void setDays (boolean[] days) {
+	public void setDays (Calendar [] days) {
 		this.days = days;
 	}
 
@@ -127,31 +127,31 @@ public class VibrateTimer implements Serializable{
 	public String getRepeatingDays() {
 		String wantedDate = "";
 
-		if (days[1]) {
-			wantedDate = wantedDate + "Mon";
+		if (days[0] != null) {
+			wantedDate = wantedDate + "M";
 		}
 
-		if (days[2]) {
-			wantedDate = wantedDate + "Tue";
+		if (days[1] != null) {
+			wantedDate = wantedDate + "T";
 		}
 
-		if (days[3]) {
-			wantedDate = wantedDate + "Wed";
+		if (days[2] != null) {
+			wantedDate = wantedDate + "W";
 		}
 
-		if (days[4]) {
-			wantedDate = wantedDate + "Thu";
+		if (days[3] !=  null) {
+			wantedDate = wantedDate + "Th";
 		}
 
-		if (days[5]) {
-			wantedDate = wantedDate + "Fri";
+		if (days[4] != null) {
+			wantedDate = wantedDate + "F";
 		}
 
-		if (days[6]) {
+		if (days[5] != null) {
 			wantedDate = wantedDate + "Sat";
 		}
 
-		if (days[0]) {
+		if (days[6] != null) {
 			wantedDate = wantedDate + "Sun";
 		}
 		return wantedDate;
@@ -166,11 +166,35 @@ public class VibrateTimer implements Serializable{
 	 */
 	public Integer getNumberOfRepeatingDays () {
 		Integer numberOfRepeatingDays = 0;
-		for (int i = 0; i < 7; i++) {
-			if (days[i]) {
-				numberOfRepeatingDays += 1;
-			}
+
+		if ( days [0] != null) {
+			numberOfRepeatingDays = numberOfRepeatingDays + 1;
 		}
+
+		if (days [1] != null) {
+			numberOfRepeatingDays = numberOfRepeatingDays + 1;
+		}
+
+		if ( days [2] != null) {
+			numberOfRepeatingDays = numberOfRepeatingDays + 1;
+		}
+
+		if ( days [3] != null) {
+			numberOfRepeatingDays = numberOfRepeatingDays + 1;
+		}
+
+		if ( days [4] != null) {
+			numberOfRepeatingDays = numberOfRepeatingDays + 1;
+		}
+
+		if ( days [5] != null) {
+			numberOfRepeatingDays = numberOfRepeatingDays + 1;
+		}
+
+		if ( days [6] != null) {
+			numberOfRepeatingDays = numberOfRepeatingDays + 1;
+		}
+
 		return numberOfRepeatingDays;
 
 	}
