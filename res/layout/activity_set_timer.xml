@@ -13,8 +13,162 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
 -->
- 	
- 	
- 
+
+    <LinearLayout
+        android:id="@+id/StartTimeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Time"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TimePicker
+            android:id="@+id/startTimePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/WeekdayLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/StartTimeLayout"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Week Days"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <LinearLayout
+            android:id="@+id/WeekDayButtonsLayout"
+            android:layout_width="288dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <ToggleButton
+                android:id="@+id/Sunday"
+                android:layout_weight="0.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textOff="su"
+                android:textOn="SU"
+                android:text="ToggleButton" />
+
+            <ToggleButton
+                android:id="@+id/Monday"
+                android:layout_weight="0.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textOff="m"
+                android:textOn="M"
+                android:text="ToggleButton" />
+
+            <ToggleButton
+                android:id="@+id/Tuesday"
+                android:layout_weight="0.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textOff="tu"
+                android:textOn="TU"
+                android:text="ToggleButton" />
+
+            <ToggleButton
+                android:id="@+id/Wednesday"
+                android:layout_weight="0.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textOff="w"
+                android:textOn="W"
+                android:text="ToggleButton" />
+
+            <ToggleButton
+                android:id="@+id/Thursday"
+                android:layout_weight="0.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textOff="th"
+                android:textOn="TH"
+                android:text="ToggleButton" />
+
+            <ToggleButton
+                android:id="@+id/Friday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.14"
+                android:textOff="f"
+                android:textOn="F"
+                android:text="ToggleButton" />
+
+            <ToggleButton
+                android:id="@+id/Saturday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.14"
+                android:textOff="sa"
+                android:textOn="SA"
+                android:text="ToggleButton" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/EndTimeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/StartTimeLayout"
+        android:layout_below="@+id/WeekdayLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Time"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TimePicker
+            android:id="@+id/endTimePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/SaveCloseButtonLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/EndTimeLayout"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button1"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/button2"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+        
+    </LinearLayout>
  
 </RelativeLayout>
