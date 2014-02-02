@@ -25,7 +25,7 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_ALARM_TABLE = "CREATE TABLE alarms ( " +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+                "id INTEGER PRIMARY KEY, " + 
                 "alarm BLOB )";
 		
 		db.execSQL(CREATE_ALARM_TABLE);
@@ -56,6 +56,7 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
     	ContentValues values = new ContentValues();
     	
     	try {
+    		values.put(KEY_ID, vt.getId());
     		values.put(KEY_ALARM, VibrateTimer.serialize(vt));
     		System.out.println("adding an alarm to DB: " + vt);
     	} catch (Exception e) {
