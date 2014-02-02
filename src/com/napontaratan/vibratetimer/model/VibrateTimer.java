@@ -44,87 +44,6 @@ public class VibrateTimer implements Serializable{
 		return days;
 	}
 
-	/**
-	 * Convert startTime as Calendar into String with proper dateFormat
-	 *
-	 * @param sDateFormat
-	 * 				"HH:MM"
-	 * @return String
-	 * 				startTime after applying sDateFormat
-	 */
-	public String getStartTimeInFormat (String sDateFormat) {
-		String startTest = null;
-
-		// Construct a sDateTest based on given DateFormat 
-		SimpleDateFormat sDateTest = new SimpleDateFormat(sDateFormat);
-
-		if (startTime != null) {
-			startTest = sDateTest.format(startTime.getTime());	
-		}
-
-		System.out.println(" this is the startTest: " + startTest);
-		return startTest;
-
-	}
-
-	/**
-	 * Convert endTIme as Calendar into String with proper dateFormat
-	 * 
-	 * @param eDateFormat
-	 * 				"HH:MM"
-	 * @return String
-	 * 				endTime after applying eDateFormat
-	 */
-	public String getEndTimeInFormat (String eDateFormat) {
-
-		String endTest = null;
-		SimpleDateFormat eDateTest = new SimpleDateFormat(eDateFormat);
-
-		if (endTime != null) {
-			endTest = eDateTest.format(endTime.getTime());
-		}
-
-		System.out.println("this is the endTest: " + endTest);
-		return endTest;
-	}
-
-	/**
-	 * Get repeating days
-	 * 
-	 * @return String
-	 */
-	public String getRepeatingDays() {
-		String wantedDate = "";
-
-		if (days[1]) {
-			wantedDate = wantedDate + "Mon";
-		}
-
-		if (days[2]) {
-			wantedDate = wantedDate + "Tue";
-		}
-
-		if (days[3]) {
-			wantedDate = wantedDate + "Wed";
-		}
-
-		if (days[4]) {
-			wantedDate = wantedDate + "Thu";
-		}
-
-		if (days[5]) {
-			wantedDate = wantedDate + "Fri";
-		}
-
-		if (days[6]) {
-			wantedDate = wantedDate + "Sat";
-		}
-
-		if (days[0]) {
-			wantedDate = wantedDate + "Sun";
-		}
-		return wantedDate;
-	}
 
 	public List<Calendar> getStartAlarmCalendars(){
 		List<Calendar> calendars = new ArrayList<Calendar>();
@@ -197,9 +116,8 @@ public class VibrateTimer implements Serializable{
 		return numberOfRepeatingDays;
 	}
 	
-	// ========================== //
-	// need the following to work with the database - napon
-	
+
+	// need the following to work with the database	
 	public static byte[] serialize(Object obj) throws IOException {
     	ByteArrayOutputStream out = new ByteArrayOutputStream();
     	ObjectOutputStream os = new ObjectOutputStream(out);
@@ -214,7 +132,7 @@ public class VibrateTimer implements Serializable{
     
     @Override
     public String toString() {  // for testing purposes
-		String response = "VibrateTimer id: " + getId() + " startTime: " + getStartTime() + " endTime: " + getEndTime() + " repeating on: " + getRepeatingDays();
+		String response = "VibrateTimer id: " + getId() + " startTime: " + getStartTime() + " endTime: " + getEndTime();
     	return response;   
     }
 

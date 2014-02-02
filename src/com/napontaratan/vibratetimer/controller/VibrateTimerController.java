@@ -3,6 +3,7 @@ package com.napontaratan.vibratetimer.controller;
 import java.util.Calendar;
 import java.util.List;
 
+import com.napontaratan.vibratetimer.database.VibrateTimerDB;
 import com.napontaratan.vibratetimer.model.VibrateTimer;
 
 import android.annotation.SuppressLint;
@@ -17,8 +18,8 @@ import android.media.AudioManager;
 import android.preference.PreferenceManager;
 
 public class VibrateTimerController {
+	private VibrateTimerDB datastore;
 	
-
 	private static final int WEEK_MILLISECONDS = 604800000;
 	
 	private AlarmManager am; 
@@ -26,15 +27,17 @@ public class VibrateTimerController {
 	
 	public VibrateTimerController(Activity ac){
 		am = (AlarmManager) ac.getSystemService(Context.ALARM_SERVICE);
+		datastore = new VibrateTimerDB(ac);
 		parent = ac;
 	}
 	
 	/**
-	 * start a repeating vibrate service at the start time and
-	 * a repeating ringtone service at the end time
+	 * Start a repeating vibrate service at the start time and
+	 * a repeating ringtone service at the end time 
 	 * @param vt is the vibrateAlarm object to create a timer for
 	 */
-	public void setSystemAlarm(VibrateTimer vt, Context context){
+	public void setAlarm(VibrateTimer vt, Context context){
+		datastore.addToDB(vt);
 		List<Calendar> startTimes = vt.getStartAlarmCalendars();
 		List<Calendar> endTimes = vt.getEndAlarmCalendars();
 		int timerId = vt.getId();
@@ -51,11 +54,12 @@ public class VibrateTimerController {
 	}
 	
 	/**
-	 * cancel the services corresponding to the VibrateTimer object
+	 * Cancel the services corresponding to the VibrateTimer object
 	 * @param vt VibrateTimer object to cancel
 	 */
 	@SuppressLint("NewApi")
-	public void cancelSystemAlarm(VibrateTimer vt, Context context){
+	public void cancelAlarm(VibrateTimer vt, Context context){
+		datastore.remove(vt);
 		List<Calendar> times = vt.getStartAlarmCalendars();
 		for(Calendar time : times){
 			int id = vt.getId() + time.get(Calendar.DAY_OF_WEEK);
@@ -66,6 +70,10 @@ public class VibrateTimerController {
 					PendingIntent.FLAG_CANCEL_CURRENT);
 			am.cancel(pi);
 		}
+	}
+	
+	public List<VibrateTimer> getVibrateTimers() {
+		return datastore.getAllVibrateTimers();
 	}
 	
 	private void createSystemTimer(long time, int id, Intent intent){

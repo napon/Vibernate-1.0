@@ -67,7 +67,7 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
     	db.close(); 
     }
     
-    public List<VibrateTimer> getAllAlarmsFromDB() {
+    public List<VibrateTimer> getAllVibrateTimers() {
     	
         List<VibrateTimer> result = new LinkedList<VibrateTimer>();
         String query = "SELECT  * FROM " + TABLE_NAME;
@@ -98,4 +98,8 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
         db.delete(TABLE_NAME, null, null);
         db.close();
     }
+
+	public void remove(VibrateTimer vt) {
+		// FIXME: NAPON PLEASE IMPLEMENT THIS!!
+	}
 }
