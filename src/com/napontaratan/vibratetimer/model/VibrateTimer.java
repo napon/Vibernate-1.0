@@ -7,26 +7,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class VibrateTimer implements Serializable{
 	
-	private Calendar startTime;
-	private Calendar endTime;
-	private boolean isActive;
-	private int id;
-	private Calendar [] days = new Calendar [7];
-
-
+	private final Calendar startTime;
+	private final Calendar endTime;
+	private final int id;
+	private final boolean[] days;
 
 	/**
 	 * Constructor
 	 */
-	public VibrateTimer (Calendar startTime, Calendar endTime, boolean isActive, Calendar[] days, int id) {
+	public VibrateTimer (Calendar startTime, Calendar endTime, boolean[] days, int id) {
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.isActive = isActive;
-		isActive = false;
 		this.days = days;
 		this.id = id;
 	}
@@ -42,123 +39,68 @@ public class VibrateTimer implements Serializable{
 	public Calendar getStartTime() {
 		return startTime;
 	}
-
-	public boolean getIsActive() {
-		return isActive;
-	}
 	
-	public Calendar [] getDays() {
+	public boolean[] getDays() {
 		return days;
 	}
+
+
+	public List<Calendar> getStartAlarmCalendars(){
+		List<Calendar> calendars = new ArrayList<Calendar>();
+		for (int i = 0; i < 7; i++) {
+			if (days[i]) {
+				Calendar day = Calendar.getInstance();
+				day.set(Calendar.DAY_OF_WEEK, getDayOfWeekFromInt(i));
+				day.set(Calendar.HOUR_OF_DAY, startTime.get(Calendar.HOUR_OF_DAY));
+				day.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE));
+				day.set(Calendar.SECOND, startTime.get(Calendar.SECOND));
+			}
+		}
+		return calendars;
+	}
 	
-	// Setter
-	public void setEndTime(Calendar endTime) {
-		this.endTime = endTime;
-	}
-
-	public void setStartTime (Calendar startTime) {
-		this.startTime = startTime;
-
-	}
-
-	public void setIsActivate (boolean isActive) {
-		this.isActive = isActive;
+	public List<Calendar> getEndAlarmCalendars() {
+		List<Calendar> calendars = new ArrayList<Calendar>();
+		for (int i = 0; i < 7; i++) {
+			if (days[i]) {
+				Calendar day = Calendar.getInstance();
+				day.set(Calendar.DAY_OF_WEEK, getDayOfWeekFromInt(i));
+				day.set(Calendar.HOUR_OF_DAY, endTime.get(Calendar.HOUR_OF_DAY));
+				day.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE));
+				day.set(Calendar.SECOND, endTime.get(Calendar.SECOND));
+			}
+		}
+		return calendars;
 	}
 	
-	public void setDays (Calendar [] days) {
-		this.days = days;
+	private int getDayOfWeekFromInt(int day) {
+		int dayOfWeek = 0;
+		switch(day) {
+		case 0:
+			dayOfWeek = Calendar.SUNDAY;
+			break;
+		case 1:
+			dayOfWeek = Calendar.MONDAY;
+			break;
+		case 2:
+			dayOfWeek = Calendar.TUESDAY;
+			break;
+		case 3:
+			dayOfWeek = Calendar.WEDNESDAY;
+			break;
+		case 4:
+			dayOfWeek = Calendar.THURSDAY;
+			break;
+		case 5:
+			dayOfWeek = Calendar.FRIDAY;
+			break;
+		case 6:
+			dayOfWeek = Calendar.SATURDAY;
+			break;
+		}
+		return dayOfWeek;
 	}
-
-
-
-
-	/**
-	 * Convert startTime as Calendar into String with proper dateFormat
-	 *
-	 * @param sDateFormat
-	 * 				"HH:MM"
-	 * @return String
-	 * 				startTime after applying sDateFormat
-	 */
-	public String getStartTimeInFormat (String sDateFormat) {
-		String startTest = null;
-
-		// Construct a sDateTest based on given DateFormat 
-		SimpleDateFormat sDateTest = new SimpleDateFormat(sDateFormat);
-
-		if (startTime != null) {
-			startTest = sDateTest.format(startTime.getTime());	
-		}
-
-		System.out.println(" this is the startTest: " + startTest);
-		return startTest;
-
-	}
-
-
-
-
-	/**
-	 * Convert endTIme as Calendar into String with proper dateFormat
-	 * 
-	 * @param eDateFormat
-	 * 				"HH:MM"
-	 * @return String
-	 * 				endTime after applying eDateFormat
-	 */
-	public String getEndTimeInFormat (String eDateFormat) {
-
-		String endTest = null;
-		SimpleDateFormat eDateTest = new SimpleDateFormat(eDateFormat);
-
-		if (endTime != null) {
-			endTest = eDateTest.format(endTime.getTime());
-		}
-
-		System.out.println("this is the endTest: " + endTest);
-		return endTest;
-	}
-
-	/**
-	 * Get repeating days
-	 * 
-	 * @return String
-	 */
-	public String getRepeatingDays() {
-		String wantedDate = "";
-
-		if (days[0] != null) {
-			wantedDate = wantedDate + "M";
-		}
-
-		if (days[1] != null) {
-			wantedDate = wantedDate + "T";
-		}
-
-		if (days[2] != null) {
-			wantedDate = wantedDate + "W";
-		}
-
-		if (days[3] !=  null) {
-			wantedDate = wantedDate + "Th";
-		}
-
-		if (days[4] != null) {
-			wantedDate = wantedDate + "F";
-		}
-
-		if (days[5] != null) {
-			wantedDate = wantedDate + "Sat";
-		}
-
-		if (days[6] != null) {
-			wantedDate = wantedDate + "Sun";
-		}
-		return wantedDate;
-	}
-
-
-
+	
 	/**
 	 * Get the number of repeatingDays
 	 * 
@@ -166,42 +108,16 @@ public class VibrateTimer implements Serializable{
 	 */
 	public Integer getNumberOfRepeatingDays () {
 		Integer numberOfRepeatingDays = 0;
-
-		if ( days [0] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
+		for (int i = 0; i < 7; i++) {
+			if (days[i]) {
+				numberOfRepeatingDays += 1;
+			}
 		}
-
-		if (days [1] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
-		if ( days [2] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
-		if ( days [3] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
-		if ( days [4] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
-		if ( days [5] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
-		if ( days [6] != null) {
-			numberOfRepeatingDays = numberOfRepeatingDays + 1;
-		}
-
 		return numberOfRepeatingDays;
-
 	}
 	
-	// ========================== //
-	// need the following to work with the database - napon
-	
+
+	// need the following to work with the database	
 	public static byte[] serialize(Object obj) throws IOException {
     	ByteArrayOutputStream out = new ByteArrayOutputStream();
     	ObjectOutputStream os = new ObjectOutputStream(out);
@@ -216,8 +132,10 @@ public class VibrateTimer implements Serializable{
     
     @Override
     public String toString() {  // for testing purposes
-		String response = "VibrateTimer id: " + getId() + " isActive: " + getIsActive() + " startTime: " + getStartTime() + " endTime: " + getEndTime() + " repeating on: " + getRepeatingDays();
+		String response = "VibrateTimer id: " + getId() + " startTime: " + getStartTime() + " endTime: " + getEndTime();
     	return response;   
     }
+
+
 }
 
