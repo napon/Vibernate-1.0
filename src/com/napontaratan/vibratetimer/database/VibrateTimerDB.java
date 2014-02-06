@@ -11,6 +11,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
+/* Visual representation of the database
+ * --------------------------------------
+ * | ID (INTEGER) |	 VibrateTimer (BLOB) |
+ * |--------------|----------------------|
+ * |	...		  |	     	...			 |
+ * |--------------|----------------------|
+ */
+
+
 public class VibrateTimerDB extends SQLiteOpenHelper {
 
 	// Database Version
@@ -49,7 +59,7 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
     private static final String KEY_ALARM = "alarm";
     private static final String[] COLUMNS = {KEY_ID,KEY_ALARM};
     
-    
+    // add a VibrateTimer to the database with using the ID
     public void addToDB(VibrateTimer vt) {
     	
     	SQLiteDatabase db = this.getWritableDatabase();
@@ -67,6 +77,7 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
     	db.close(); 
     }
     
+    // retrieve all VibrateTimer objects in the database
     public List<VibrateTimer> getAllVibrateTimers() {
     	
         List<VibrateTimer> result = new LinkedList<VibrateTimer>();
@@ -93,12 +104,14 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
         return result;
     }
     
+    // erase all VibrateTimer objects in the database
     public void deleteAllFromDB(){
     	SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, null, null);
         db.close();
     }
 
+    // delete a VibrateTimer at a specified Id
 	public void remove(VibrateTimer vt) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_NAME, KEY_ID+" =?", new String[] { String.valueOf(vt.getId()) });
