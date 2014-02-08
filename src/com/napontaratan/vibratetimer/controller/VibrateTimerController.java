@@ -15,9 +15,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
-import android.preference.PreferenceManager;
 
-public class VibrateTimerController {
+public final class VibrateTimerController {
 	private VibrateTimerDB datastore;
 	
 	private static final int WEEK_MILLISECONDS = 604800000;
@@ -89,7 +88,7 @@ public class VibrateTimerController {
 		}
 	}
 	
-	private class VibrateOffBroadcastReceiver extends BroadcastReceiver {
+	private static final class VibrateOffBroadcastReceiver extends BroadcastReceiver {
 		public void onReceive(Context context, Intent intent) {
 			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 			audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
