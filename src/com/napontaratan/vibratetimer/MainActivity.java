@@ -36,6 +36,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		controller = new VibrateTimerController(this);
+		
 		VibrateTimerDB datastore = new VibrateTimerDB(this);
 		datastore.deleteAllFromDB();
 		boolean[] daysOn = {false, true, false, true, false, true, false};
