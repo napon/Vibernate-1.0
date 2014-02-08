@@ -1,5 +1,6 @@
 package com.napontaratan.vibratetimer;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -10,10 +11,13 @@ import com.napontaratan.vibratetimer.model.VibrateTimer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -24,6 +28,8 @@ public class MainActivity extends Activity {
 	private List<VibrateTimer> vibrateTimers;
 	private String[] days = new String[]{"Su ","Mo ","Tu ","We ","Th ","Fr ","Sa "};
 	private VibrateTimerController controller;
+	private static String SELECTED_TIMER = "selected_timer";
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +37,10 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		controller = new VibrateTimerController(this);
 		VibrateTimerDB datastore = new VibrateTimerDB(this);
+		datastore.deleteAllFromDB();
 		boolean[] daysOn = {false, true, false, true, false, true, false};
 		// must change the id everytime you run becase the previous id already exists in the database
-		VibrateTimer sample = new VibrateTimer(Calendar.getInstance(), Calendar.getInstance(), daysOn, 12);
+		VibrateTimer sample = new VibrateTimer(Calendar.getInstance(), Calendar.getInstance(), daysOn, 22);
 		System.out.println(sample);
 		datastore.addToDB(sample);
 
@@ -45,6 +52,24 @@ public class MainActivity extends Activity {
 		
 		System.out.println(vibrateTimers);
 		listOfVibrates.setAdapter(new VibrateArrayAdapter(this, R.layout.vibrate, vibrateTimers));
+		final Context currentActivity = this;
+		listOfVibrates.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int index,
+					long arg3) {
+				System.out.println("clicked on " + index);
+				Intent i = new Intent(currentActivity, SetTimerActivity.class);
+				try {
+					i.putExtra(SELECTED_TIMER, VibrateTimer.serialize(vibrateTimers.get(index)));
+					startActivity(i);
+				} catch (IOException e) {
+					System.out.println("IOException caught in MainActivity");
+				}
+			}
+			
+		});
+			
 	}
 
 	@Override
