@@ -3,6 +3,7 @@ package com.napontaratan.vibratetimer;
 import java.util.*;
 
 import com.napontaratan.vibratetimer.controller.VibrateTimerController;
+import com.napontaratan.vibratetimer.database.VibrateTimerDB;
 import com.napontaratan.vibratetimer.model.VibrateTimer;
 
 import android.os.Bundle;
@@ -28,6 +29,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		controller = new VibrateTimerController(this);
+		VibrateTimerDB datastore = new VibrateTimerDB(this); 
+		boolean [] daysOn = {false, true, false, true, false, true, false}; 
+		VibrateTimer sample =  new VibrateTimer(Calendar.getInstance(), Calendar.getInstance(), daysOn, VibrateTimerController.generateNextId(this));
+		datastore.addToDB(sample);
 		
 		vibrateTimers = controller.getVibrateTimers();
 		
