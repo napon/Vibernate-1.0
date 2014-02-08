@@ -1,5 +1,6 @@
 package com.napontaratan.vibratetimer;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.napontaratan.vibratetimer.controller.VibrateTimerController;
@@ -29,16 +30,21 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		controller = new VibrateTimerController(this);
-		VibrateTimerDB datastore = new VibrateTimerDB(this); 
-		boolean [] daysOn = {false, true, false, true, false, true, false}; 
-		VibrateTimer sample =  new VibrateTimer(Calendar.getInstance(), Calendar.getInstance(), daysOn, VibrateTimerController.generateNextId(this));
-		datastore.addToDB(sample);
 		
+		VibrateTimerDB datastore = new VibrateTimerDB(this);
+		boolean[] daysOn = {false, true, false, true, false, true, false};
+		// must change the id everytime you run becase the previous id already exists in the database
+		VibrateTimer sample = new VibrateTimer(Calendar.getInstance(), Calendar.getInstance(), daysOn, 12);
+		System.out.println(sample);
+		datastore.addToDB(sample);
+
 		vibrateTimers = controller.getVibrateTimers();
 		
 		ListView listOfVibrates = (ListView) findViewById(R.id.vibrates);
 		if(vibrateTimers == null) // no existing timers
 			vibrateTimers = new ArrayList<VibrateTimer>();
+		
+		System.out.println(vibrateTimers);
 		listOfVibrates.setAdapter(new VibrateArrayAdapter(this, R.layout.vibrate, vibrateTimers));
 	}
 
@@ -76,8 +82,8 @@ public class MainActivity extends Activity {
 			View itemView = inflater.inflate(resourceId, parent, false); 
 			// get all the info needed to show a timer on UI 
 			VibrateTimer timer = listOfVibrateTimers.get(position);
-			String startTime = timer.getStartTime().getTime().toString();
-			String endTime = timer.getEndTime().getTime().toString();
+			String startTime = this.getStartTimeInFormat(timer, "HH:MM");
+			String endTime = this.getStartTimeInFormat(timer, "HH:MM");
 			boolean[] daysOn = timer.getDays();
 			String dayString = "";
 			// determines which days the timer are active and log it as String 
@@ -95,10 +101,58 @@ public class MainActivity extends Activity {
 			day.setText(dayString);
 			return itemView;	
 		}
+		
+		/**
+		 * Convert startTime as Calendar into String with proper dateFormat
+		 *
+		 * @param sDateFormat
+		 *              "HH:MM"
+		 * @return String
+		 *              startTime after applying sDateFormat
+		 */
+		public String getStartTimeInFormat (VibrateTimer vt , String sDateFormat) {
+		    String startTest = null;
 
+		    // Construct a sDateTest based on given DateFormat 
+		    SimpleDateFormat sDateTest = new SimpleDateFormat(sDateFormat);
+
+		    if (vt.getStartTime() != null) {
+		        startTest = sDateTest.format(vt.getStartTime().getTime());  
+		    }
+
+		    System.out.println(" this is the startTest: " + startTest);
+		    return startTest;
+
+		}
 
 	} 
+	
+	/**
+	 * Convert endTime as Calendar into String with proper dateFormat
+	 *
+	 * @param eDateFormat
+	 *              "HH:MM"
+	 * @return String
+	 *              startTime after applying eDateFormat
+	 */
+	public String getEndTimeInFormat (VibrateTimer vt , String eDateFormat) {
+	    String startTest = null;
+
+	    // Construct a sDateTest based on given DateFormat 
+	    SimpleDateFormat sDateTest = new SimpleDateFormat(eDateFormat);
+
+	    if (vt.getEndTime() != null) {
+	        startTest = sDateTest.format(vt.getEndTime().getTime());  
+	    }
+
+	    System.out.println(" this is the startTest: " + startTest);
+	    return startTest;
+
+	}
+
+} 
+	
 
 
-}
+
 
