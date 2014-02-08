@@ -6,13 +6,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class VibrateTimer implements Serializable{
-	
+public final class VibrateTimer implements Serializable{
+	private static final long serialVersionUID = 2881690379292284022L;
 	private final Calendar startTime;
 	private final Calendar endTime;
 	private final int id;
@@ -100,22 +99,6 @@ public class VibrateTimer implements Serializable{
 		}
 		return dayOfWeek;
 	}
-	
-	/**
-	 * Get the number of repeatingDays
-	 * 
-	 * @return numberOfRepeatingDays
-	 */
-	public Integer getNumberOfRepeatingDays () {
-		Integer numberOfRepeatingDays = 0;
-		for (int i = 0; i < 7; i++) {
-			if (days[i]) {
-				numberOfRepeatingDays += 1;
-			}
-		}
-		return numberOfRepeatingDays;
-	}
-	
 
 	// need the following to work with the database	
 	public static byte[] serialize(Object obj) throws IOException {
@@ -135,7 +118,5 @@ public class VibrateTimer implements Serializable{
 		String response = "VibrateTimer id: " + getId() + " startTime: " + getStartTime() + " endTime: " + getEndTime();
     	return response;   
     }
-
-
 }
 
