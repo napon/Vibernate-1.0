@@ -25,21 +25,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	
+
 	private List<VibrateTimer> vibrateTimers;
 	private String[] days = new String[]{"Su ","Mo ","Tu ","We ","Th ","Fr ","Sa "};
 	private VibrateTimerController controller;
 	private static String SELECTED_TIMER = "selected_timer";
-	
-	
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		controller = new VibrateTimerController(this);
-		
+
 		VibrateTimerDB datastore = new VibrateTimerDB(this);
 		datastore.deleteAllFromDB();
+		// mock object
 		boolean[] daysOn = {false, true, false, true, false, true, false};
 		// must change the id everytime you run becase the previous id already exists in the database
 		VibrateTimer sample = new VibrateTimer(Calendar.getInstance(), Calendar.getInstance(), daysOn, 22);
@@ -47,19 +48,17 @@ public class MainActivity extends Activity {
 		datastore.addToDB(sample);
 
 		vibrateTimers = controller.getVibrateTimers();
-		
-		ListView listOfVibrates = (ListView) findViewById(R.id.vibrates);
 		if(vibrateTimers == null) // no existing timers
 			vibrateTimers = new ArrayList<VibrateTimer>();
-		
-		System.out.println(vibrateTimers);
+
+		ListView listOfVibrates = (ListView) findViewById(R.id.vibrates);
 		listOfVibrates.setAdapter(new VibrateArrayAdapter(this, R.layout.vibrate, vibrateTimers));
-		final Context currentActivity = this;
+		final Context currentActivity = this; // to pass into item click intent
 		listOfVibrates.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int index,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int index,long arg3) {
+				// passing the vibrate object that has been clicked
 				System.out.println("clicked on " + index);
 				Intent i = new Intent(currentActivity, SetTimerActivity.class);
 				try {
@@ -69,9 +68,9 @@ public class MainActivity extends Activity {
 					System.out.println("IOException caught in MainActivity");
 				}
 			}
-			
+
 		});
-			
+
 	}
 
 	@Override
@@ -80,40 +79,39 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
-	
-	
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_addVibrate:
-	            addVibrateTimer();
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_addVibrate:
+			addVibrateTimer();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	
+
+	/**
+	 * add a new VibrateTimer, user will be taken to setTimerActivity page 
+	 */
 	public void addVibrateTimer(){
 		Intent i = new Intent(this, SetTimerActivity.class);
 		startActivity(i);
 	}
-	
-	
+
+
 
 	/**
 	 * List Adapter for our custom VibrateTimer Object
 	 * @author daniel
 	 *
 	 */
-
 	private class VibrateArrayAdapter extends ArrayAdapter<VibrateTimer> {
 		private List<VibrateTimer> listOfVibrateTimers;
 		private int resourceId; // id for a single item view 
 		private Context context;
-		
+
 		public VibrateArrayAdapter(Context context, int customViewResourceId,
 				List<VibrateTimer> vibrateTimers) {
 			super(context, customViewResourceId, vibrateTimers);
@@ -121,17 +119,17 @@ public class MainActivity extends Activity {
 			this.listOfVibrateTimers = vibrateTimers;
 			resourceId = customViewResourceId;
 		}
-		
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
 			LayoutInflater inflater = (LayoutInflater) context
-			        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View itemView = inflater.inflate(resourceId, parent, false); 
 			// get all the info needed to show a timer on UI 
 			VibrateTimer timer = listOfVibrateTimers.get(position);
-			String startTime = this.getStartTimeInFormat(timer, "HH:MM");
-			String endTime = this.getStartTimeInFormat(timer, "HH:MM");
+			String startTime = getStartTimeInFormat(timer, "HH:MM");
+			String endTime = getStartTimeInFormat(timer, "HH:MM");
 			boolean[] daysOn = timer.getDays();
 			String dayString = "";
 			// determines which days the timer are active and log it as String 
@@ -149,32 +147,34 @@ public class MainActivity extends Activity {
 			day.setText(dayString);
 			return itemView;	
 		}
-		
-		/**
-		 * Convert startTime as Calendar into String with proper dateFormat
-		 *
-		 * @param sDateFormat
-		 *              "HH:MM"
-		 * @return String
-		 *              startTime after applying sDateFormat
-		 */
-		public String getStartTimeInFormat (VibrateTimer vt , String sDateFormat) {
-		    String startTest = null;
-
-		    // Construct a sDateTest based on given DateFormat 
-		    SimpleDateFormat sDateTest = new SimpleDateFormat(sDateFormat);
-
-		    if (vt.getStartTime() != null) {
-		        startTest = sDateTest.format(vt.getStartTime().getTime());  
-		    }
-
-		    System.out.println(" this is the startTest: " + startTest);
-		    return startTest;
-
-		}
-
 	} 
 	
+	
+	// ========  HELPER METHODS ==========================
+	
+	/**
+	 * Convert startTime as Calendar into String with proper dateFormat
+	 *
+	 * @param sDateFormat
+	 *              "HH:MM"
+	 * @return String
+	 *              startTime after applying sDateFormat
+	 */
+	public String getStartTimeInFormat (VibrateTimer vt , String sDateFormat) {
+		String startTest = null;
+
+		// Construct a sDateTest based on given DateFormat 
+		SimpleDateFormat sDateTest = new SimpleDateFormat(sDateFormat);
+
+		if (vt.getStartTime() != null) {
+			startTest = sDateTest.format(vt.getStartTime().getTime());  
+		}
+
+		System.out.println(" this is the startTest: " + startTest);
+		return startTest;
+
+	}
+
 	/**
 	 * Convert endTime as Calendar into String with proper dateFormat
 	 *
@@ -184,22 +184,22 @@ public class MainActivity extends Activity {
 	 *              startTime after applying eDateFormat
 	 */
 	public String getEndTimeInFormat (VibrateTimer vt , String eDateFormat) {
-	    String startTest = null;
+		String startTest = null;
 
-	    // Construct a sDateTest based on given DateFormat 
-	    SimpleDateFormat sDateTest = new SimpleDateFormat(eDateFormat);
+		// Construct a sDateTest based on given DateFormat 
+		SimpleDateFormat sDateTest = new SimpleDateFormat(eDateFormat);
 
-	    if (vt.getEndTime() != null) {
-	        startTest = sDateTest.format(vt.getEndTime().getTime());  
-	    }
+		if (vt.getEndTime() != null) {
+			startTest = sDateTest.format(vt.getEndTime().getTime());  
+		}
 
-	    System.out.println(" this is the startTest: " + startTest);
-	    return startTest;
+		System.out.println(" this is the startTest: " + startTest);
+		return startTest;
 
 	}
 
 } 
-	
+
 
 
 
