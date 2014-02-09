@@ -1,5 +1,4 @@
-<ScrollView 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView1"
     android:layout_width="wrap_content"
@@ -17,11 +16,37 @@
         tools:context=".SetTimerActivity" >
 
         <LinearLayout
+            android:id="@+id/SaveCloseButtonLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/SaveButton"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.14"
+                android:text="Save" />
+
+            <Button
+                android:id="@+id/CancelButton"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.14"
+                android:text="Cancel" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/StartTimeLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
+            android:layout_below="@+id/SaveCloseButtonLayout"
             android:orientation="vertical" >
 
             <TextView
@@ -62,7 +87,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="s"
                     android:textOn="S" />
 
@@ -71,7 +95,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="m"
                     android:textOn="M" />
 
@@ -80,7 +103,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="t"
                     android:textOn="T" />
 
@@ -89,7 +111,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="w"
                     android:textOn="W" />
 
@@ -98,7 +119,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="t"
                     android:textOn="T" />
 
@@ -107,7 +127,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="f"
                     android:textOn="F" />
 
@@ -116,7 +135,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="s"
                     android:textOn="S" />
             </LinearLayout>
@@ -143,30 +161,6 @@
                 android:id="@+id/endTimePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/SaveCloseButtonLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/EndTimeLayout"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/button1"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Save" />
-
-            <Button
-                android:id="@+id/button2"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cancel" />
         </LinearLayout>
     </RelativeLayout>
 
