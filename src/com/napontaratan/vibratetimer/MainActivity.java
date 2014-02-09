@@ -39,17 +39,11 @@ public class MainActivity extends Activity {
 		controller = new VibrateTimerController(this);
 
 		VibrateTimerDB datastore = new VibrateTimerDB(this);
-		datastore.deleteAllFromDB();
-		// mock object
-		boolean[] daysOn = {false, true, false, true, false, true, false};
-		// must change the id everytime you run becase the previous id already exists in the database
-		VibrateTimer sample = new VibrateTimer(Calendar.getInstance(), Calendar.getInstance(), daysOn, 22);
-		System.out.println(sample);
-		datastore.addToDB(sample);
 
 		vibrateTimers = controller.getVibrateTimers();
 		if(vibrateTimers == null) // no existing timers
 			vibrateTimers = new ArrayList<VibrateTimer>();
+		System.out.println(vibrateTimers.size());
 
 		ListView listOfVibrates = (ListView) findViewById(R.id.vibrates);
 		listOfVibrates.setAdapter(new VibrateArrayAdapter(this, R.layout.vibrate, vibrateTimers));
