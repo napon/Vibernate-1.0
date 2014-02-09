@@ -87,8 +87,13 @@ public class MainActivity extends Activity {
 		case R.id.action_addVibrate:
 			addVibrateTimer();
 			return true;
+		case R.id.action_settings:	// go to about page
+			Intent i = new Intent(this, About.class);
+			startActivity(i);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		
 		}
 	}
 
