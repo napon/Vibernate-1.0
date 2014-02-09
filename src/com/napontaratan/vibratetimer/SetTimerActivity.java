@@ -89,6 +89,8 @@ public class SetTimerActivity extends Activity {
 				}
 
 				// GO BACK
+				Intent intent = new Intent(SetTimerActivity.this, MainActivity.class);
+				startActivity(intent);
 			}
 		});
 
@@ -96,10 +98,11 @@ public class SetTimerActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO
+
 				System.out.println("Clicked on Close");
 				// GO BACK
-
+				Intent intent = new Intent(SetTimerActivity.this, MainActivity.class);
+				startActivity(intent);
 			}
 		});
 	}
