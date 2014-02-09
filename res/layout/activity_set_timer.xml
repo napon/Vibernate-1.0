@@ -24,7 +24,7 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/SaveButton"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
                 android:text="Save" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/CancelButton"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -87,7 +87,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="s"
                     android:textOn="S" />
 
@@ -96,7 +95,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="m"
                     android:textOn="M" />
 
@@ -105,7 +103,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="t"
                     android:textOn="T" />
 
@@ -114,7 +111,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="w"
                     android:textOn="W" />
 
@@ -123,7 +119,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="t"
                     android:textOn="T" />
 
@@ -132,7 +127,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="f"
                     android:textOn="F" />
 
@@ -141,7 +135,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.14"
-                    android:text="ToggleButton"
                     android:textOff="s"
                     android:textOn="S" />
             </LinearLayout>
