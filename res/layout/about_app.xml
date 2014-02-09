@@ -167,7 +167,9 @@
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Share Me :D" />
+            android:background="#6600CC"
+            android:text="Share Me " />
+
     </TableLayout>
 
 </ScrollView>
