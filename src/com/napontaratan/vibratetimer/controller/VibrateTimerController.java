@@ -97,13 +97,19 @@ public final class VibrateTimerController {
 	
 	public static int generateNextId(Context context) {
 		SharedPreferences prefs = context.getSharedPreferences("idcounter", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
 		int counter = prefs.getInt("idcounter", -1);
+		System.out.println("counter before is " + counter);
 			if(counter == -1) {
 				counter = 0;
-				prefs.edit().putInt("idcounter", counter);
+				editor.putInt("idcounter", counter);
+				editor.commit();
 			} else {
 				counter = counter + 10;
+				editor.putInt("idcounter", counter);
+				editor.commit();
 			}
+			System.out.println("counter after is " + counter);
 		return counter;
 	}
 }
