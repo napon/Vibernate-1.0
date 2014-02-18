@@ -42,11 +42,13 @@ public final class VibrateTimerController {
 		int timerId = vt.getId();
 		for (Calendar startTime : startTimes) {
 			int id = timerId + startTime.get(Calendar.DAY_OF_WEEK);
+			System.out.println("attempting to create a system alarm with id: " + id + " for start");
 			Intent activateVibration = new Intent(context, VibrateOnBroadcastReceiver.class); 
 			createSystemTimer(startTime.getTimeInMillis(), id, activateVibration);
 		}
 		for(Calendar endTime : endTimes){
-			int id = timerId + endTime.get(Calendar.DAY_OF_WEEK);
+			int id = timerId + endTime.get(Calendar.DAY_OF_WEEK) + 10;
+			System.out.println("attempting to create a system alarm with id: " + id + " for stop");
 			Intent disableVibration = new Intent(context, VibrateOffBroadcastReceiver.class);
 			createSystemTimer(endTime.getTimeInMillis(), id, disableVibration);
 		}
@@ -105,7 +107,7 @@ public final class VibrateTimerController {
 				editor.putInt("idcounter", counter);
 				editor.commit();
 			} else {
-				counter = counter + 10;
+				counter = counter + 20;
 				editor.putInt("idcounter", counter);
 				editor.commit();
 			}

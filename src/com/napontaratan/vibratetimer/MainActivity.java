@@ -169,7 +169,6 @@ public class MainActivity extends Activity {
 			startTest = sDateTest.format(vt.getStartTime().getTime());  
 		}
 
-		System.out.println(" this is the startTest: " + startTest);
 		return startTest;
 
 	}

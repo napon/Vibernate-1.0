@@ -29,6 +29,11 @@
         </activity>
         <activity android:name="About">
         </activity>
+        
+        <receiver android:name="VibrateOnBroadcastReceiver" >
+        </receiver>
+        <receiver android:name="VibrateOffBroadcastReceiver" >
+        </receiver>
     </application>
 
 </manifest>

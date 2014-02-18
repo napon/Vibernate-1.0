@@ -53,6 +53,7 @@ public final class VibrateTimer implements Serializable{
 				day.set(Calendar.HOUR_OF_DAY, startTime.get(Calendar.HOUR_OF_DAY));
 				day.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE));
 				day.set(Calendar.SECOND, startTime.get(Calendar.SECOND));
+				calendars.add(day);
 			}
 		}
 		return calendars;
@@ -67,6 +68,7 @@ public final class VibrateTimer implements Serializable{
 				day.set(Calendar.HOUR_OF_DAY, endTime.get(Calendar.HOUR_OF_DAY));
 				day.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE));
 				day.set(Calendar.SECOND, endTime.get(Calendar.SECOND));
+				calendars.add(day);
 			}
 		}
 		return calendars;
