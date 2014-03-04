@@ -19,7 +19,8 @@ import android.view.MenuItem;
 
 public class SetTimerActivity extends Activity {
 
-	VibrateTimer oldTimer = null;
+	private static String SELECTED_TIMER = "selected_timer";
+	private VibrateTimer oldTimer = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,11 @@ public class SetTimerActivity extends Activity {
 		setContentView(R.layout.activity_set_timer);
 
 		Bundle extras = getIntent().getExtras();
-
+		
 		if (extras != null) {
 			try {
 				oldTimer = (VibrateTimer) VibrateTimer.deserialize(extras
-						.getByteArray("selected_timer"));
+						.getByteArray(SELECTED_TIMER));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -73,7 +74,6 @@ public class SetTimerActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Create a new VibrateTimer object
-				System.out.println("Clicked on Save");
 				Calendar start = generateCalendar(R.id.startTimePicker);
 				Calendar end = generateCalendar(R.id.endTimePicker);
 				boolean[] days = generateDays();
@@ -100,8 +100,6 @@ public class SetTimerActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
-				System.out.println("Clicked on Close");
 				// GO BACK
 				Intent intent = new Intent(SetTimerActivity.this, MainActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -149,6 +147,7 @@ public class SetTimerActivity extends Activity {
 		for (int x = 0; x < 7; x++) {
 			days[x] = ((ToggleButton) findViewById(buttonIds[x])).isChecked();
 		}
+
 		return days;
 	}
 }

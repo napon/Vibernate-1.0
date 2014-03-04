@@ -32,6 +32,7 @@ public final class VibrateTimerController {
 	 * Start a repeating vibrate service at the start time and
 	 * a repeating ringtone service at the end time 
 	 * @param vt is the vibrateAlarm object to create a timer for
+	 * @author Napon, Sunny
 	 */
 	public void setAlarm(VibrateTimer vt, Context context){
 		datastore.addToDB(vt);
@@ -55,6 +56,7 @@ public final class VibrateTimerController {
 	/**
 	 * Cancel the services corresponding to the VibrateTimer object
 	 * @param vt VibrateTimer object to cancel
+	 * @author Napon, Sunny
 	 */
 	@SuppressLint("NewApi")
 	public void cancelAlarm(VibrateTimer vt, Context context){
@@ -63,10 +65,14 @@ public final class VibrateTimerController {
 		for(Calendar time : times){
 			int id = vt.getId() + time.get(Calendar.DAY_OF_WEEK);
 			System.out.println("deleting alarm with id " + id + " and " + (id+10));
-			PendingIntent pi = PendingIntent.getBroadcast(parent.getBaseContext(), id, new Intent(parent.getBaseContext(), VibrateOnBroadcastReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+			PendingIntent pi = PendingIntent.getBroadcast(parent.getBaseContext(), id, 
+					new Intent(parent.getBaseContext(), VibrateOnBroadcastReceiver.class), 
+					PendingIntent.FLAG_UPDATE_CURRENT);
 			pi.cancel();
 			am.cancel(pi);
-			pi = PendingIntent.getBroadcast(parent.getBaseContext(), id+10, new Intent(parent.getBaseContext(), VibrateOffBroadcastReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+			pi = PendingIntent.getBroadcast(parent.getBaseContext(), id+10, 
+					new Intent(parent.getBaseContext(), VibrateOffBroadcastReceiver.class), 
+					PendingIntent.FLAG_UPDATE_CURRENT);
 			pi.cancel();
 			am.cancel(pi);
 		}
@@ -75,14 +81,25 @@ public final class VibrateTimerController {
 	public List<VibrateTimer> getVibrateTimers() {
 		return datastore.getAllVibrateTimers();
 	}
-	
-	public void createSystemTimer(long time, int id, Intent intent){
-		System.out.println("SETTING AN ALARM IN CREATESYSTEMTIMER");
+	/**
+	 * Create a PendingIntent that will activate at the specified time
+	 * @param time - time in milliseconds
+	 * @param id - unique id from generateNextId(context)
+	 * @param intent - either VibrateOn or VibrateOff
+	 * @author Napon, Sunny
+	 */
+	private void createSystemTimer(long time, int id, Intent intent){
 		PendingIntent startVibrating = PendingIntent.getBroadcast(parent.getBaseContext(),
 				id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		am.setRepeating(AlarmManager.RTC, time, WEEK_MILLISECONDS, startVibrating); 
 	}
 	
+	/**
+	 * Generate a unique id for each alarm.
+	 * @param context
+	 * @return a unique alarm id
+	 * @author Napon
+	 */
 	public static int generateNextId(Context context) {
 		SharedPreferences prefs = context.getSharedPreferences("idcounter", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();

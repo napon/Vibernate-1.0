@@ -32,7 +32,6 @@ public class MainActivity extends Activity {
 	private static String SELECTED_TIMER = "selected_timer";
 	VibrateArrayAdapter vaa;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,7 +65,12 @@ public class MainActivity extends Activity {
 		});
 	}
 	
-	@Override // sNapZ wrote this
+	/**
+	 * Create a pop up menu when the user long-presses an alarm entry.
+	 * Menu items: Modify, Delete
+	 * @author Napon
+	 */
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if(v.getId() == R.id.vibrates){
@@ -75,7 +79,12 @@ public class MainActivity extends Activity {
 		}
 	}
 	
-	@Override // sNapZ wrote this
+	/**
+	 * Clicking on 'Modify' will launch a SetTimerActivity with the selected alarm
+	 * Clicking on 'Delete' will delete the alarm from the database and update the ListView
+	 * @author Napon
+	 */
+	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
 		if(item.getTitle().equals("Modify")){
@@ -131,7 +140,7 @@ public class MainActivity extends Activity {
 
 	/**
 	 * List Adapter for our custom VibrateTimer Object
-	 * @author daniel
+	 * @author Daniel
 	 *
 	 */
 	private class VibrateArrayAdapter extends ArrayAdapter<VibrateTimer> {
@@ -149,7 +158,6 @@ public class MainActivity extends Activity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View itemView = inflater.inflate(resourceId, parent, false); 
@@ -181,11 +189,9 @@ public class MainActivity extends Activity {
 	
 	/**
 	 * Convert startTime as Calendar into String with proper dateFormat
-	 *
 	 * @param sDateFormat
-	 *              "HH:MM"
-	 * @return String
-	 *              startTime after applying sDateFormat
+	 * @return String - startTime after applying sDateFormat
+	 * @author Paul, Amelia
 	 */
 	@SuppressLint("SimpleDateFormat")
 	public String getStartTimeInFormat (VibrateTimer vt , String sDateFormat) {
@@ -200,20 +206,18 @@ public class MainActivity extends Activity {
 
 	/**
 	 * Convert endTime as Calendar into String with proper dateFormat
-	 *
 	 * @param eDateFormat
-	 *              "HH:MM"
 	 * @return String
-	 *              startTime after applying eDateFormat
+	 * @author Paul, Amelia
 	 */
 	@SuppressLint("SimpleDateFormat")
 	public String getEndTimeInFormat (VibrateTimer vt , String eDateFormat) {
-		String startTest = null; 
+		String endTest = null; 
 		SimpleDateFormat sDateTest = new SimpleDateFormat(eDateFormat);
 		if (vt.getEndTime() != null) {
-			startTest = sDateTest.format(vt.getEndTime().getTime());  
+			endTest = sDateTest.format(vt.getEndTime().getTime());  
 		}
-		return startTest;
+		return endTest;
 	}
 
 } 

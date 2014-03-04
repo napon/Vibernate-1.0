@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * @author Paul, Amelia
+ */
 public final class VibrateTimer implements Serializable{
 	private static final long serialVersionUID = 2881690379292284022L;
 	private final Calendar startTime;
@@ -100,24 +103,40 @@ public final class VibrateTimer implements Serializable{
 		}
 		return dayOfWeek;
 	}
+	
+	@Override
+	public String toString() {  // for testing purposes
+		String response = "VibrateTimer id: " + getId() + " startTime: " + getStartTime() + " endTime: " + getEndTime();
+		return response;   
+	}
 
-	// need the following to work with the database	
+	// ==== need the following to work with the database =====
+	
+	/**
+	 * Convert a VibrateTimer object into an array of Bytes to be stored into the Database
+	 * @param obj - (Object) VibrateTimer object
+	 * @return byte[]
+	 * @throws IOException
+	 * @author Napon
+	 */
 	public static byte[] serialize(Object obj) throws IOException {
     	ByteArrayOutputStream out = new ByteArrayOutputStream();
     	ObjectOutputStream os = new ObjectOutputStream(out);
     	os.writeObject(obj);
     	return out.toByteArray();
     }
+	/**
+	 * Convert an array of Bytes back to its object form
+	 * @param byte[] - data
+	 * @return (Object) VibrateTimer
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 * @author Napon
+	 */
     public static Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
     	ByteArrayInputStream in = new ByteArrayInputStream(data);
     	ObjectInputStream is = new ObjectInputStream(in);
     	return is.readObject();
-    }
-    
-    @Override
-    public String toString() {  // for testing purposes
-		String response = "VibrateTimer id: " + getId() + " startTime: " + getStartTime() + " endTime: " + getEndTime();
-    	return response;   
     }
 }
 
