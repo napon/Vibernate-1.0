@@ -10,11 +10,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
 
 public final class VibrateTimerController {
 	private VibrateTimerDB datastore;
@@ -43,13 +41,13 @@ public final class VibrateTimerController {
 		for (Calendar startTime : startTimes) {
 			int id = timerId + startTime.get(Calendar.DAY_OF_WEEK);
 			System.out.println("attempting to create a system alarm with id: " + id + " for start");
-			Intent activateVibration = new Intent(context, VibrateOnBroadcastReceiver.class); 
+			Intent activateVibration = new Intent(parent.getBaseContext(), VibrateOnBroadcastReceiver.class); 
 			createSystemTimer(startTime.getTimeInMillis(), id, activateVibration);
 		}
 		for(Calendar endTime : endTimes){
 			int id = timerId + endTime.get(Calendar.DAY_OF_WEEK) + 10;
 			System.out.println("attempting to create a system alarm with id: " + id + " for stop");
-			Intent disableVibration = new Intent(context, VibrateOffBroadcastReceiver.class);
+			Intent disableVibration = new Intent(parent.getBaseContext(), VibrateOffBroadcastReceiver.class);
 			createSystemTimer(endTime.getTimeInMillis(), id, disableVibration);
 		}
 	}
@@ -64,11 +62,12 @@ public final class VibrateTimerController {
 		List<Calendar> times = vt.getStartAlarmCalendars();
 		for(Calendar time : times){
 			int id = vt.getId() + time.get(Calendar.DAY_OF_WEEK);
-			Intent[] things = new Intent[2];
-			things[0] = new Intent(context, VibrateOnBroadcastReceiver.class);
-			things[1] = new Intent(context, VibrateOffBroadcastReceiver.class);
-			PendingIntent pi = PendingIntent.getActivities(parent.getApplicationContext(), id, things, 
-					PendingIntent.FLAG_CANCEL_CURRENT);
+			System.out.println("deleting alarm with id " + id + " and " + (id+10));
+			PendingIntent pi = PendingIntent.getBroadcast(parent.getBaseContext(), id, new Intent(parent.getBaseContext(), VibrateOnBroadcastReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+			pi.cancel();
+			am.cancel(pi);
+			pi = PendingIntent.getBroadcast(parent.getBaseContext(), id+10, new Intent(parent.getBaseContext(), VibrateOffBroadcastReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+			pi.cancel();
 			am.cancel(pi);
 		}
 	}
@@ -77,24 +76,11 @@ public final class VibrateTimerController {
 		return datastore.getAllVibrateTimers();
 	}
 	
-	private void createSystemTimer(long time, int id, Intent intent){
-		PendingIntent startVibrating = PendingIntent.getBroadcast(parent.getApplicationContext(),
-				id, intent, PendingIntent.FLAG_ONE_SHOT);
+	public void createSystemTimer(long time, int id, Intent intent){
+		System.out.println("SETTING AN ALARM IN CREATESYSTEMTIMER");
+		PendingIntent startVibrating = PendingIntent.getBroadcast(parent.getBaseContext(),
+				id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		am.setRepeating(AlarmManager.RTC, time, WEEK_MILLISECONDS, startVibrating); 
-	}
-
-	private static final class VibrateOnBroadcastReceiver extends BroadcastReceiver {
-		public void onReceive(Context context, Intent intent) {
-			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-			audio.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-		}
-	}
-	
-	private static final class VibrateOffBroadcastReceiver extends BroadcastReceiver {
-		public void onReceive(Context context, Intent intent) {
-			AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-			audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-		}
 	}
 	
 	public static int generateNextId(Context context) {

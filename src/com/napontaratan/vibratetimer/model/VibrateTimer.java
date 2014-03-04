@@ -16,7 +16,7 @@ public final class VibrateTimer implements Serializable{
 	private final Calendar endTime;
 	private final int id;
 	private final boolean[] days;
-
+	
 	/**
 	 * Constructor
 	 */
@@ -42,8 +42,7 @@ public final class VibrateTimer implements Serializable{
 	public boolean[] getDays() {
 		return days;
 	}
-
-
+	
 	public List<Calendar> getStartAlarmCalendars(){
 		List<Calendar> calendars = new ArrayList<Calendar>();
 		for (int i = 0; i < 7; i++) {

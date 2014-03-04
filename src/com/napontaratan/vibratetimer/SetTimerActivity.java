@@ -20,7 +20,7 @@ import android.view.MenuItem;
 public class SetTimerActivity extends Activity {
 
 	VibrateTimer oldTimer = null;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 

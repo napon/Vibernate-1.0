@@ -57,7 +57,6 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
  
     private static final String KEY_ID = "id";
     private static final String KEY_ALARM = "alarm";
-    private static final String[] COLUMNS = {KEY_ID,KEY_ALARM};
     
     // add a VibrateTimer to the database with using the ID
     public void addToDB(VibrateTimer vt) {

@@ -30,9 +30,9 @@
         <activity android:name="About">
         </activity>
         
-        <receiver android:name="VibrateOnBroadcastReceiver" >
+        <receiver android:name="com.napontaratan.vibratetimer.controller.VibrateOffBroadcastReceiver" >
         </receiver>
-        <receiver android:name="VibrateOffBroadcastReceiver" >
+        <receiver android:name="com.napontaratan.vibratetimer.controller.VibrateOnBroadcastReceiver" >
         </receiver>
     </application>
 
