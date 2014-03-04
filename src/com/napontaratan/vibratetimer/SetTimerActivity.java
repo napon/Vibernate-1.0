@@ -22,23 +22,22 @@ public class SetTimerActivity extends Activity {
 	private static String SELECTED_TIMER = "selected_timer";
 	private VibrateTimer oldTimer = null;
 	
+	/**
+	 * Create/Modify a VibrateTimer interface
+	 * @author Bryan
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_set_timer);
-
 		Bundle extras = getIntent().getExtras();
-		
 		if (extras != null) {
 			try {
 				oldTimer = (VibrateTimer) VibrateTimer.deserialize(extras
 						.getByteArray(SELECTED_TIMER));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

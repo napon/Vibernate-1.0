@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 
+/**
+ * Put the phone to ringtone mode
+ * @author Napon
+ */
 public class VibrateOffBroadcastReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {

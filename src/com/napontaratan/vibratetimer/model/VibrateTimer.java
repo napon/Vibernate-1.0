@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
+ * VibrateTimer model
  * @author Paul, Amelia
  */
 public final class VibrateTimer implements Serializable{
@@ -20,9 +21,7 @@ public final class VibrateTimer implements Serializable{
 	private final int id;
 	private final boolean[] days;
 	
-	/**
-	 * Constructor
-	 */
+	// Constructor
 	public VibrateTimer (Calendar startTime, Calendar endTime, boolean[] days, int id) {
 		this.startTime = startTime;
 		this.endTime = endTime;

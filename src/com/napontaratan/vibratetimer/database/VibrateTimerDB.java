@@ -11,15 +11,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-
-/* Visual representation of the database
- * --------------------------------------
+/**
+ * Visual representation of the database
+ * ---------------------------------------
  * | ID (INTEGER) |	 VibrateTimer (BLOB) |
  * |--------------|----------------------|
  * |	...		  |	     	...			 |
  * |--------------|----------------------|
+ * 
+ * Database tutorial:
+ * http://hmkcode.com/android-simple-sqlite-database-tutorial/
  */
-
 
 public class VibrateTimerDB extends SQLiteOpenHelper {
 
@@ -49,16 +51,14 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
 	
 	/* ============================================================================== */
 	
-	 /**
-     * CRUD operations (create "add", read "get", update, delete)
-     */
- 
     private static final String TABLE_NAME = "alarms";
- 
     private static final String KEY_ID = "id";
     private static final String KEY_ALARM = "alarm";
     
-    // add a VibrateTimer to the database with using the ID
+    /**
+     * Add a VibrateTimer to the database based on the ID
+     * @author Napon, Paul, Amelia
+     */
     public void addToDB(VibrateTimer vt) {
     	
     	SQLiteDatabase db = this.getWritableDatabase();
@@ -76,14 +76,17 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
     	db.close(); 
     }
     
-    // retrieve all VibrateTimer objects in the database
+    /**
+     * Retrieve all VibrateTimer objects in the database
+     * @return List<VibrateTimer>
+     * @author Napon, Paul, Amelia
+     */
     public List<VibrateTimer> getAllVibrateTimers() {
     	
         List<VibrateTimer> result = new LinkedList<VibrateTimer>();
         String query = "SELECT  * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
- 
         VibrateTimer vt = null;
         
         if (cursor.moveToFirst()) {
@@ -103,14 +106,21 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
         return result;
     }
     
-    // erase all VibrateTimer objects in the database
+    /**
+     * Clears the database
+     * @author Napon, Paul, Amelia
+     */
     public void deleteAllFromDB(){
     	SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, null, null);
         db.close();
     }
 
-    // delete a VibrateTimer at a specified Id
+    /**
+     * Remove a VibrateTimer entry from the database that matches the given id
+     * @param VibrateTimer vt
+     * @author Napon, Paul, Amelia
+     */
 	public void remove(VibrateTimer vt) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_NAME, KEY_ID+" =?", new String[] { String.valueOf(vt.getId()) });

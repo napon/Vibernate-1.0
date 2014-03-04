@@ -32,6 +32,10 @@ public class MainActivity extends Activity {
 	private static String SELECTED_TIMER = "selected_timer";
 	VibrateArrayAdapter vaa;
 
+	/**
+	 * Main interface for the app
+	 * @author Daniel
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -126,7 +130,6 @@ public class MainActivity extends Activity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
-		
 		}
 	}
 

@@ -15,10 +15,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 public final class VibrateTimerController {
-	private VibrateTimerDB datastore;
-	
+
 	private static final int WEEK_MILLISECONDS = 604800000;
-	
+	private VibrateTimerDB datastore;
 	private AlarmManager am; 
 	private Activity parent;
 	
@@ -118,5 +117,3 @@ public final class VibrateTimerController {
 		return counter;
 	}
 }
-
-
