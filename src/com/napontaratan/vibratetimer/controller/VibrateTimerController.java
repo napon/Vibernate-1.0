@@ -6,7 +6,6 @@ import java.util.List;
 import com.napontaratan.vibratetimer.database.VibrateTimerDB;
 import com.napontaratan.vibratetimer.model.VibrateTimer;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -57,7 +56,6 @@ public final class VibrateTimerController {
 	 * @param vt VibrateTimer object to cancel
 	 * @author Napon, Sunny
 	 */
-	@SuppressLint("NewApi")
 	public void cancelAlarm(VibrateTimer vt, Context context){
 		datastore.remove(vt);
 		List<Calendar> times = vt.getStartAlarmCalendars();
@@ -103,7 +101,6 @@ public final class VibrateTimerController {
 		SharedPreferences prefs = context.getSharedPreferences("idcounter", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
 		int counter = prefs.getInt("idcounter", -1);
-		System.out.println("counter before is " + counter);
 			if(counter == -1) {
 				counter = 0;
 				editor.putInt("idcounter", counter);
@@ -113,7 +110,6 @@ public final class VibrateTimerController {
 				editor.putInt("idcounter", counter);
 				editor.commit();
 			}
-			System.out.println("counter after is " + counter);
 		return counter;
 	}
 }

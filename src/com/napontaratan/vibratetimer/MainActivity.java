@@ -8,7 +8,6 @@ import com.napontaratan.vibratetimer.controller.VibrateTimerController;
 import com.napontaratan.vibratetimer.model.VibrateTimer;
 
 import android.os.Bundle;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -103,7 +102,10 @@ public class MainActivity extends Activity {
 		}else {
 			controller.cancelAlarm(vibrateTimers.get(info.position), getApplicationContext());
 			vaa.clear();
-			vaa.addAll(controller.getVibrateTimers());
+			List<VibrateTimer> lov = controller.getVibrateTimers();
+			for(VibrateTimer vt : lov){
+				vaa.add(vt);
+			}
 			vaa.notifyDataSetChanged();
 			return true;
 		}
@@ -196,10 +198,9 @@ public class MainActivity extends Activity {
 	 * @return String - startTime after applying sDateFormat
 	 * @author Paul, Amelia
 	 */
-	@SuppressLint("SimpleDateFormat")
 	public String getStartTimeInFormat (VibrateTimer vt , String sDateFormat) {
 		String startTest = null;
-		SimpleDateFormat sDateTest = new SimpleDateFormat(sDateFormat);
+		SimpleDateFormat sDateTest = new SimpleDateFormat(sDateFormat, Locale.getDefault());
 		if (vt.getStartTime() != null) {
 			startTest = sDateTest.format(vt.getStartTime().getTime());  
 		}
@@ -213,10 +214,9 @@ public class MainActivity extends Activity {
 	 * @return String
 	 * @author Paul, Amelia
 	 */
-	@SuppressLint("SimpleDateFormat")
 	public String getEndTimeInFormat (VibrateTimer vt , String eDateFormat) {
 		String endTest = null; 
-		SimpleDateFormat sDateTest = new SimpleDateFormat(eDateFormat);
+		SimpleDateFormat sDateTest = new SimpleDateFormat(eDateFormat, Locale.getDefault());
 		if (vt.getEndTime() != null) {
 			endTest = sDateTest.format(vt.getEndTime().getTime());  
 		}

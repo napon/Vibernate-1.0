@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="25dip"
-            android:text="The team"
+            android:text="@string/the_team"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TableRow
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:padding="3dip"
                 android:layout_gravity="center"
-                android:text="Napon Taratan" >
+                android:text="@string/napon" >
             </TextView>
 
             <ImageView
@@ -49,7 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dip"
-                android:text="  Hi2 " >
+                android:layout_gravity="center"
+                android:text="@string/sunny" >
             </TextView>
 
             <ImageView
@@ -71,7 +72,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dip"
-                android:text="  Hi2 " >
+                android:layout_gravity="center"
+                android:text="@string/daniel" >
             </TextView>
 
             <ImageView
@@ -93,7 +95,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dip"
-                android:text="  Hi2 " >
+                android:layout_gravity="center"
+                android:text="@string/bryan" >
             </TextView>
 
             <ImageView
@@ -115,7 +118,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dip"
-                android:text="  Hi2 " >
+                android:layout_gravity="center"
+                android:text="@string/amelia" >
             </TextView>
 
             <ImageView
@@ -137,7 +141,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dip"
-                android:text="  Hi2 " >
+                android:layout_gravity="center"
+                android:text="@string/paul" >
             </TextView>
 
             <ImageView
@@ -169,7 +174,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#6600CC"
-            android:text="Share Me " />
+            android:text="@string/share" />
 
     </TableLayout>
 

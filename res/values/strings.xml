@@ -3,9 +3,25 @@
 
     <string name="app_name">VibrateTimer</string>
     <string name="action_settings">About App</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_set_timer">SetTimerActivity</string>
     <string name="add_Vibrate">Add Vibrate</string>
+    
     <string name="pic">Developer Picture</string>
+    
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="week_days">Week Days</string>
+    
+    <string name="the_team">The team</string>
+    <string name="napon">Napon Taratan</string>
+    <string name="sunny">Sunny Lee</string>
+    <string name="daniel">Daniel Lim</string>
+    <string name="bryan">Bryan Tai</string>
+    <string name="amelia">Amelia Yap</string>
+    <string name="paul">Kijtapart Nawattranakul</string>
+    <string name="share">Share Me</string>
+    
 </resources>

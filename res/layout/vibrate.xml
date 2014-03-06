@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dip"
-    android:background="#000" >
+    android:layout_height="40dip" >
 
     <RelativeLayout
         android:id="@+id/notification"
@@ -17,8 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dip"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/notification"
-        android:text="9:30am" />
+        android:layout_toRightOf="@+id/notification" />
 
     <TextView
         android:id="@+id/day"
@@ -26,8 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dip"
-        android:layout_toRightOf="@+id/time_start"
-        android:text="MWF" />
+        android:layout_toRightOf="@+id/time_start" />
 
     <TextView
         android:id="@+id/time_end"
@@ -35,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20dip"
-        android:text="11:30am" />
+        android:layout_marginRight="20dip" />
 
 </RelativeLayout>
