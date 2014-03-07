@@ -50,6 +50,17 @@ public class MainActivity extends Activity {
 		vaa = new VibrateArrayAdapter(this, R.layout.vibrate, vibrateTimers);
 		listOfVibrates.setAdapter(vaa);
 		registerForContextMenu(listOfVibrates);
+		
+		/**
+		 * If the list is empty, display a message
+		 * !!! needs polishing
+		 * @author Napon
+		 */
+		TextView emptyView = new TextView(this);
+		 ((ViewGroup) listOfVibrates.getParent()).addView(emptyView);
+		emptyView.setText("Click the + button to add new timers!");
+		listOfVibrates.setEmptyView(emptyView);
+		
 		final Context currentActivity = this; // to pass into item click intent
 		
 		listOfVibrates.setOnItemClickListener(new OnItemClickListener(){
@@ -160,7 +171,7 @@ public class MainActivity extends Activity {
 			this.listOfVibrateTimers = vibrateTimers;
 			resourceId = customViewResourceId;
 		}
-
+		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) context
