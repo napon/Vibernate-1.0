@@ -26,7 +26,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/pic"
-                    android:src="@drawable/ic_launcher1" />
+                    android:src="@drawable/profile1" />
 
                 <TextView
                     android:id="@+id/name1"
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="@string/pic"
-                    android:src="@drawable/ic_launcher2" />
+                    android:src="@drawable/profile2" />
 
                 <TextView
                     android:id="@+id/name2"
@@ -68,7 +68,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/pic"
                     android:gravity="left"
-                    android:src="@drawable/ic_launcher3" />
+                    android:src="@drawable/profile3" />
 
                 <TextView
                     android:id="@+id/name3"
@@ -90,7 +90,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/pic"
                     android:gravity="left"
-                    android:src="@drawable/ic_launcher4" />
+                    android:src="@drawable/profile4" />
 
                 <TextView
                     android:id="@+id/name4"
@@ -112,7 +112,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/pic"
                     android:gravity="left"
-                    android:src="@drawable/ic_launcher5" />
+                    android:src="@drawable/profile5" />
 
                 <TextView
                     android:id="@+id/name5"
@@ -134,7 +134,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/pic"
                     android:gravity="left"
-                    android:src="@drawable/ic_launcher6" />
+                    android:src="@drawable/profile6" />
 
                 <TextView
                     android:id="@+id/name6"
