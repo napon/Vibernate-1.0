@@ -121,7 +121,9 @@ public class SetTimerActivity extends Activity {
 
 		cal.set(Calendar.HOUR_OF_DAY, tp.getCurrentHour());
 		cal.set(Calendar.MINUTE, tp.getCurrentMinute());
-
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		
 		return cal;
 	}
 
