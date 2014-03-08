@@ -10,10 +10,10 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.view.MenuItem;
 
@@ -74,10 +74,16 @@ public class SetTimerActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				
 				// Create a new VibrateTimer object
 				Calendar start = generateCalendar(R.id.startTimePicker);
 				Calendar end = generateCalendar(R.id.endTimePicker);
 				boolean[] days = generateDays();
+				
+				if(!isWeekDaySet(days))
+					Toast.makeText(SetTimerActivity.this, "Please specify the days", Toast.LENGTH_SHORT);
+				
+				
 				int id = VibrateTimerController
 						.generateNextId(SetTimerActivity.this);
 				VibrateTimer vt = new VibrateTimer(start, end, days, id);
@@ -123,7 +129,9 @@ public class SetTimerActivity extends Activity {
 
 		cal.set(Calendar.HOUR_OF_DAY, tp.getCurrentHour());
 		cal.set(Calendar.MINUTE, tp.getCurrentMinute());
-
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		
 		return cal;
 	}
 
@@ -150,5 +158,14 @@ public class SetTimerActivity extends Activity {
 		}
 
 		return days;
+	}
+	
+	
+	private boolean isWeekDaySet(boolean [] days){
+		for(boolean day: days){
+			if(!day)
+				return true;
+		}
+		return false;
 	}
 }
