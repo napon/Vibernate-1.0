@@ -78,9 +78,12 @@ public class SetTimerActivity extends Activity {
 				Calendar end = generateCalendar(R.id.endTimePicker);
 				boolean[] days = generateDays();
 				
-				if(!isWeekDaySet(days))
-					Toast.makeText(SetTimerActivity.this, "Please specify the days", Toast.LENGTH_SHORT);
 				
+				
+				if(!isWeekDaySet(days)) {
+					Toast.makeText(SetTimerActivity.this, "Please specify the days", Toast.LENGTH_SHORT).show();
+				
+				} else {
 				
 				int id = VibrateTimerController
 						.generateNextId(SetTimerActivity.this);
@@ -98,6 +101,7 @@ public class SetTimerActivity extends Activity {
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(intent);
+			}
 			}
 		});
 
@@ -160,8 +164,9 @@ public class SetTimerActivity extends Activity {
 	
 	
 	private boolean isWeekDaySet(boolean [] days){
+		System.out.println("Incoming Days Status:" + days.length);
 		for(boolean day: days){
-			if(!day)
+			if(day)
 				return true;
 		}
 		return false;
