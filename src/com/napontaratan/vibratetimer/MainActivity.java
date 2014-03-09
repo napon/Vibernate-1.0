@@ -229,6 +229,7 @@ public class MainActivity extends Activity {
 	 */
 	public String getEndTimeInFormat (VibrateTimer vt , String eDateFormat) {
 		String endTest = null; 
+		//SimpleDateFormat sDateTest = new SimpleDateFormat(eDateFormat, Locale.getDefault());
 		SimpleDateFormat sDateTest = new SimpleDateFormat(eDateFormat, Locale.getDefault());
 		if (vt.getEndTime() != null) {
 			endTest = sDateTest.format(vt.getEndTime().getTime());  

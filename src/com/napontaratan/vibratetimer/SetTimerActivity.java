@@ -48,12 +48,14 @@ public class SetTimerActivity extends Activity {
 		if (oldTimer != null) {
 			TimePicker start = (TimePicker) findViewById(R.id.startTimePicker);
 			TimePicker end = (TimePicker) findViewById(R.id.endTimePicker);
+			
 			Calendar startTime = oldTimer.getStartTime();
 			Calendar endTime = oldTimer.getEndTime();
-			start.setCurrentHour(startTime.get(Calendar.HOUR));
+			start.setCurrentHour(startTime.get(Calendar.HOUR_OF_DAY));
 			start.setCurrentMinute(startTime.get(Calendar.MINUTE));
-			end.setCurrentHour(endTime.get(Calendar.HOUR));
+			end.setCurrentHour(endTime.get(Calendar.HOUR_OF_DAY));
 			end.setCurrentMinute(endTime.get(Calendar.MINUTE));
+			
 
 			int[] buttonIds = new int[] { R.id.Sunday, R.id.Monday,
 					R.id.Tuesday, R.id.Wednesday, R.id.Thursday, R.id.Friday,
