@@ -102,7 +102,6 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
                 result.add(vt);
             } while (cursor.moveToNext());
         }
-        Log.d("getAllBooks()", "number of alarms: " + result.size());
         return result;
     }
     

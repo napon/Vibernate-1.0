@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 		vibrateTimers = controller.getVibrateTimers();
 		if(vibrateTimers == null) // no existing timers
 			vibrateTimers = new ArrayList<VibrateTimer>();
-		System.out.println(vibrateTimers.size());
+		System.out.println("number of alarms: " + vibrateTimers.size());
 
 		ListView listOfVibrates = (ListView) findViewById(R.id.vibrates);
 		vaa = new VibrateArrayAdapter(this, R.layout.vibrate, vibrateTimers);
