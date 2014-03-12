@@ -4,6 +4,8 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="19" />
@@ -16,23 +18,25 @@
         <activity
             android:name="com.napontaratan.vibratetimer.MainActivity"
             android:label="@string/app_name" >
-             
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-       
         <activity
             android:name="com.napontaratan.vibratetimer.SetTimerActivity"
             android:label="@string/title_activity_set_timer" >
         </activity>
-        <activity android:name="About">
+        <activity android:name="About" >
         </activity>
-        
-        <receiver android:name="com.napontaratan.vibratetimer.controller.VibrateOffBroadcastReceiver" >
-        </receiver>
-        <receiver android:name="com.napontaratan.vibratetimer.controller.VibrateOnBroadcastReceiver" >
+
+        <receiver android:name="com.napontaratan.vibratetimer.controller.VibrateOffBroadcastReceiver" />
+        <receiver android:name="com.napontaratan.vibratetimer.controller.VibrateOnBroadcastReceiver" />
+        <receiver android:name="com.napontaratan.vibratetimer.controller.OnRebootBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
         </receiver>
     </application>
 

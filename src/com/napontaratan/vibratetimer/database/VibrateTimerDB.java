@@ -127,4 +127,19 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
 		Log.d("db.remove()", "deleting the vibrateTimer: " + vt.toString());
 		db.close();
 	}
+	
+	/**
+     * Return true if the given id already exists in the DB
+     * @param int id
+     * @author Napon
+     */
+	public boolean contains(int id) {
+		SQLiteDatabase sqldb = this.getWritableDatabase();
+		String Query = "Select * from " + TABLE_NAME + " where " + KEY_ID + "=" + id;
+		Cursor cursor = sqldb.rawQuery(Query, null);
+		if(cursor.getCount()<=0){
+			return false;
+		}
+		return true;
+	}
 }

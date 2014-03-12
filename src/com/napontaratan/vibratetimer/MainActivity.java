@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		controller = new VibrateTimerController(this);
+		controller = new VibrateTimerController(this.getBaseContext());
 
 		vibrateTimers = controller.getVibrateTimers();
 		if(vibrateTimers == null) // no existing timers
