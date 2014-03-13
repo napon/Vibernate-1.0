@@ -16,14 +16,14 @@ public class About extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about_app);
-		
+
 		Button shareBotton = (Button) this.findViewById(R.id.ShareButton);
 		shareBotton.setOnClickListener(new OnClickListener() {
-		   
+
 			@Override
-		    public void onClick(View arg0) { 
-		    	ShareIt();
-		    }
+			public void onClick(View arg0) { 
+				ShareIt();
+			}
 
 			private void ShareIt() {
 				Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -32,13 +32,9 @@ public class About extends Activity {
 
 				sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "VibrateTimer is the best app ever!");
 				sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-				
+
 				startActivity(Intent.createChooser(sharingIntent, "Share via"));
 			}
 		});
 	}
-	
 }
-
-
-

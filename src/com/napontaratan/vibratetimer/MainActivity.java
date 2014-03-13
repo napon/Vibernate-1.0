@@ -24,7 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	
+
 	private List<VibrateTimer> vibrateTimers;
 	private String[] days = new String[]{"Su ","Mo ","Tu ","We ","Th ","Fr ","Sa "};
 	private VibrateTimerController controller;
@@ -50,19 +50,19 @@ public class MainActivity extends Activity {
 		vaa = new VibrateArrayAdapter(this, R.layout.vibrate, vibrateTimers);
 		listOfVibrates.setAdapter(vaa);
 		registerForContextMenu(listOfVibrates);
-		
+
 		/**
 		 * If the list is empty, display a message
 		 * !!! needs polishing
 		 * @author Napon
 		 */
 		TextView emptyView = new TextView(this);
-		 ((ViewGroup) listOfVibrates.getParent()).addView(emptyView);
+		((ViewGroup) listOfVibrates.getParent()).addView(emptyView);
 		emptyView.setText("Click the + button to add new timers!");
 		listOfVibrates.setEmptyView(emptyView);
-		
+
 		final Context currentActivity = this; // to pass into item click intent
-		
+
 		listOfVibrates.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int index,long arg3) {
@@ -78,7 +78,7 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
-	
+
 	/**
 	 * Create a pop up menu when the user long-presses an alarm entry.
 	 * Menu items: Modify, Delete
@@ -89,10 +89,10 @@ public class MainActivity extends Activity {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if(v.getId() == R.id.vibrates){
 			menu.add("Modify");
-		    menu.add("Delete");
+			menu.add("Delete");
 		}
 	}
-	
+
 	/**
 	 * Clicking on 'Modify' will launch a SetTimerActivity with the selected alarm
 	 * Clicking on 'Delete' will delete the alarm from the database and update the ListView
@@ -171,7 +171,7 @@ public class MainActivity extends Activity {
 			this.listOfVibrateTimers = vibrateTimers;
 			resourceId = customViewResourceId;
 		}
-		
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) context
@@ -199,12 +199,12 @@ public class MainActivity extends Activity {
 			return itemView;	
 		}
 	} 
-	
-	
-	
-	
+
+
+
+
 	// ========  HELPER METHODS ==========================
-	
+
 	/**
 	 * Convert startTime as Calendar into String with proper dateFormat
 	 * @param sDateFormat
@@ -238,8 +238,3 @@ public class MainActivity extends Activity {
 	}
 
 } 
-
-
-
-
-

@@ -20,7 +20,7 @@ public final class VibrateTimer implements Serializable{
 	private final Calendar endTime;
 	private final int id;
 	private final boolean[] days;
-	
+
 	// Constructor
 	public VibrateTimer (Calendar startTime, Calendar endTime, boolean[] days, int id) {
 		this.startTime = startTime;
@@ -32,7 +32,7 @@ public final class VibrateTimer implements Serializable{
 	public int getId(){
 		return id;
 	}
-	
+
 	public Calendar getEndTime() {
 		return endTime;
 	}
@@ -40,11 +40,11 @@ public final class VibrateTimer implements Serializable{
 	public Calendar getStartTime() {
 		return startTime;
 	}
-	
+
 	public boolean[] getDays() {
 		return days;
 	}
-	
+
 	public List<Calendar> getStartAlarmCalendars(){
 		List<Calendar> calendars = new ArrayList<Calendar>();
 		for (int i = 0; i < 7; i++) {
@@ -59,7 +59,7 @@ public final class VibrateTimer implements Serializable{
 		}
 		return calendars;
 	}
-	
+
 	public List<Calendar> getEndAlarmCalendars() {
 		List<Calendar> calendars = new ArrayList<Calendar>();
 		for (int i = 0; i < 7; i++) {
@@ -74,7 +74,7 @@ public final class VibrateTimer implements Serializable{
 		}
 		return calendars;
 	}
-	
+
 	private int getDayOfWeekFromInt(int day) {
 		int dayOfWeek = 0;
 		switch(day) {
@@ -102,7 +102,7 @@ public final class VibrateTimer implements Serializable{
 		}
 		return dayOfWeek;
 	}
-	
+
 	@Override
 	public String toString() {  // for testing purposes
 		String response = "VibrateTimer id: " + getId() + " startTime: " + getStartTime() + " endTime: " + getEndTime();
@@ -110,7 +110,7 @@ public final class VibrateTimer implements Serializable{
 	}
 
 	// ==== need the following to work with the database =====
-	
+
 	/**
 	 * Convert a VibrateTimer object into an array of Bytes to be stored into the Database
 	 * @param obj - (Object) VibrateTimer object
@@ -119,11 +119,11 @@ public final class VibrateTimer implements Serializable{
 	 * @author Napon
 	 */
 	public static byte[] serialize(Object obj) throws IOException {
-    	ByteArrayOutputStream out = new ByteArrayOutputStream();
-    	ObjectOutputStream os = new ObjectOutputStream(out);
-    	os.writeObject(obj);
-    	return out.toByteArray();
-    }
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		ObjectOutputStream os = new ObjectOutputStream(out);
+		os.writeObject(obj);
+		return out.toByteArray();
+	}
 	/**
 	 * Convert an array of Bytes back to its object form
 	 * @param byte[] - data
@@ -132,10 +132,9 @@ public final class VibrateTimer implements Serializable{
 	 * @throws ClassNotFoundException
 	 * @author Napon
 	 */
-    public static Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
-    	ByteArrayInputStream in = new ByteArrayInputStream(data);
-    	ObjectInputStream is = new ObjectInputStream(in);
-    	return is.readObject();
-    }
+	public static Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
+		ByteArrayInputStream in = new ByteArrayInputStream(data);
+		ObjectInputStream is = new ObjectInputStream(in);
+		return is.readObject();
+	}
 }
-

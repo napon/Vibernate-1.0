@@ -21,5 +21,4 @@ public class OnRebootBroadcastReceiver extends BroadcastReceiver {
 			controller.setAlarm(vt,context);
 		}
 	}
-
 }
