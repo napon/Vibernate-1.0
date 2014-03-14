@@ -67,7 +67,6 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
 		try {
 			values.put(KEY_ID, vt.getId());
 			values.put(KEY_ALARM, VibrateTimer.serialize(vt));
-			Log.d("db.addToDB()","adding an alarm to DB: " + vt);
 		} catch (Exception e) {
 			System.out.println("IOException caught in addToDB()");
 		}
@@ -123,7 +122,6 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
 	public void remove(VibrateTimer vt) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_NAME, KEY_ID+" =?", new String[] { String.valueOf(vt.getId()) });
-		Log.d("db.remove()", "deleting the vibrateTimer: " + vt.toString());
 		db.close();
 	}
 
