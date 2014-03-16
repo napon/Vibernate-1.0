@@ -68,3 +68,6 @@ local.properties
 # Package Files #
 *.war
 *.ear
+
+# Project Files #
+analytics.xml
