@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.napontaratan.vibratetimer.controller.VibrateTimerController;
 import com.napontaratan.vibratetimer.model.VibrateTimer;
 
@@ -31,6 +32,21 @@ public class MainActivity extends Activity {
 	private static String SELECTED_TIMER = "selected_timer";
 	VibrateArrayAdapter vaa;
 
+	/**
+	 * Google Analytics code
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
+	
 	/**
 	 * Main interface for the app
 	 * @author Daniel

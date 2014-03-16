@@ -1,5 +1,7 @@
 package com.napontaratan.vibratetimer;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +14,22 @@ import android.widget.Button;
  * @author Paul, Amelia
  */
 public class About extends Activity {
+	
+	/**
+	 * Google Analytics code
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
