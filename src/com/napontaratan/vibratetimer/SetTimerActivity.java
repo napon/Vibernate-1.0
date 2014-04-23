@@ -163,7 +163,7 @@ public class SetTimerActivity extends Activity {
 	
 	private boolean isWeekDaySet(boolean [] days){
 		for(boolean day: days){
-			if(!day)
+			if(day)
 				return true;
 		}
 		return false;

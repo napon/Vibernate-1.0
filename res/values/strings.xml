@@ -3,6 +3,8 @@
 
     <string name="app_name">VibrateTimer</string>
     <string name="action_settings">About</string>
+    <string name="action_bulk_edit">Bulk Edit</string>
+    <string name="action_delete">Delete</string>
     <string name="title_activity_set_timer">SetTimerActivity</string>
     <string name="add_Vibrate">Add Vibrate</string>
     
@@ -23,5 +25,5 @@
     <string name="amelia">Amelia Yap</string>
     <string name="paul">Kijtapart Nawattranakul</string>
     <string name="share">Share Me</string>
-    
+        
 </resources>
