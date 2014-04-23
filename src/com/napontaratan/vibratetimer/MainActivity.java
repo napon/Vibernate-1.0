@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.napontaratan.vibratetimer.controller.VibrateTimerController;
 import com.napontaratan.vibratetimer.model.VibrateTimer;
 
@@ -27,7 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	
+
 	private List<VibrateTimer> vibrateTimers;
 	private String[] days = new String[]{"Su ","Mo ","Tu ","We ","Th ","Fr ","Sa "};
 	private VibrateTimerController controller;
@@ -37,6 +38,21 @@ public class MainActivity extends Activity {
 	
 
 	/**
+	 * Google Analytics code
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
+	
+	/**
 	 * Main interface for the app
 	 * @author Daniel
 	 */
@@ -44,11 +60,12 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		controller = new VibrateTimerController(this);
+		controller = new VibrateTimerController(this.getBaseContext());
 
 		vibrateTimers = controller.getVibrateTimers();
 		if(vibrateTimers == null) // no existing timers
 			vibrateTimers = new ArrayList<VibrateTimer>();
+
 		System.out.println(vibrateTimers.size());
 		listViewVibrateTimers = (ListView) findViewById(R.id.vibrates);
 		registerForContextMenu(listViewVibrateTimers);
@@ -56,18 +73,27 @@ public class MainActivity extends Activity {
 		listViewVibrateTimers.setAdapter(vaa);
 		setListViewMultiChoiceMode();
 		
+
+		System.out.println("number of alarms: " + vibrateTimers.size());
+
+		ListView listOfVibrates = (ListView) findViewById(R.id.vibrates);
+		vaa = new VibrateArrayAdapter(this, R.layout.vibrate, vibrateTimers);
+		listOfVibrates.setAdapter(vaa);
+		registerForContextMenu(listOfVibrates);
+
 		/**
 		 * If the list is empty, display a message
 		 * !!! needs polishing
 		 * @author Napon
 		 */
 		TextView emptyView = new TextView(this);
-		 ((ViewGroup) listViewVibrateTimers.getParent()).addView(emptyView);
+		((ViewGroup) listOfVibrates.getParent()).addView(emptyView);
 		emptyView.setText("Click the + button to add new timers!");
-		listViewVibrateTimers.setEmptyView(emptyView);
-	
+		listOfVibrates.setEmptyView(emptyView);
+
 		final Context currentActivity = this; // to pass into item click intent
-		listViewVibrateTimers.setOnItemClickListener(new OnItemClickListener(){
+
+		listOfVibrates.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int index,long arg3) {
 				// passing the vibrate object that has been clicked
@@ -83,6 +109,7 @@ public class MainActivity extends Activity {
 		});
 		
 	}
+
 	
 //	/**
 //	 * Create a pop up menu when the user long-presses an alarm entry.
@@ -134,7 +161,7 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	/**
 	 * Contextual Action Bar - only available api > 11 
 	 * Edit multiple items at once
@@ -230,7 +257,7 @@ public class MainActivity extends Activity {
 			this.listOfVibrateTimers = vibrateTimers;
 			resourceId = customViewResourceId;
 		}
-		
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) context
@@ -258,12 +285,12 @@ public class MainActivity extends Activity {
 			return itemView;	
 		}
 	} 
-	
-	
-	
-	
+
+
+
+
 	// ========  HELPER METHODS ==========================
-	
+
 	/**
 	 * Convert startTime as Calendar into String with proper dateFormat
 	 * @param sDateFormat
@@ -315,8 +342,3 @@ public class MainActivity extends Activity {
 	
 
 } 
-
-
-
-
-

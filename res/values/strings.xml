@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">VibrateTimer</string>
+    <string name="app_name">Vibernate</string>
     <string name="action_settings">About</string>
     <string name="action_bulk_edit">Bulk Edit</string>
     <string name="action_delete">Delete</string>
