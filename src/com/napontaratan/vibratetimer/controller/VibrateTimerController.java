@@ -21,7 +21,7 @@ public final class VibrateTimerController {
 
 	public VibrateTimerController(Context context){
 		am = (AlarmManager) context.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-		datastore = new VibrateTimerDB(context);
+		datastore = VibrateTimerDB.getInstance(context);
 		parent = context;
 	}
 

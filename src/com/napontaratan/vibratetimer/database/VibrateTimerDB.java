@@ -29,11 +29,21 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 	// Database Name
 	private static final String DATABASE_NAME = "VibrateTimerDB";
-
-	public VibrateTimerDB(Context context) {
+	
+	private static VibrateTimerDB vibrateTimerDBInstance = null;
+	
+	public static VibrateTimerDB getInstance(Context context){
+		// source: http://stackoverflow.com/questions/18147354/sqlite-connection-leaked-although-everything-closed?answertab=oldest#tab-top
+		// ensures only one database helper will exist across the entire application's lifecycle
+		if(vibrateTimerDBInstance == null)
+			vibrateTimerDBInstance = new VibrateTimerDB(context.getApplicationContext());
+		return vibrateTimerDBInstance;
+	}
+	
+	private VibrateTimerDB(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);  
 	}
-
+		
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_ALARM_TABLE = "CREATE TABLE alarms ( " +
@@ -41,10 +51,12 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
 				"alarm BLOB )";
 
 		db.execSQL(CREATE_ALARM_TABLE);
+		System.out.println("on create");
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		System.out.println("on upgrade");
 		db.execSQL("DROP TABLE IF EXISTS alarms");
 		this.onCreate(db);
 	}
@@ -60,7 +72,7 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
 	 * @author Napon, Paul, Amelia
 	 */
 	public void addToDB(VibrateTimer vt) {
-
+		System.out.println("add to db");
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 
@@ -131,6 +143,7 @@ public class VibrateTimerDB extends SQLiteOpenHelper {
 	 * @author Napon
 	 */
 	public boolean contains(int id) {
+		System.out.println("query");
 		SQLiteDatabase sqldb = this.getWritableDatabase();
 		String Query = "Select * from " + TABLE_NAME + " where " + KEY_ID + "=" + id;
 		Cursor cursor = sqldb.rawQuery(Query, null);
