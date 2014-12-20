@@ -18,13 +18,13 @@ public final class VibrateTimerController {
 	private VibrateTimerDB datastore;
 	private AlarmManager am; 
 	private Context parent;
-	
+
 	public VibrateTimerController(Context context){
 		am = (AlarmManager) context.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-		datastore = new VibrateTimerDB(context);
+		datastore = VibrateTimerDB.getInstance(context);
 		parent = context;
 	}
-	
+
 	/**
 	 * Start a repeating vibrate service at the start time and
 	 * a repeating ringtone service at the end time 
@@ -39,18 +39,16 @@ public final class VibrateTimerController {
 		int timerId = vt.getId();
 		for (Calendar startTime : startTimes) {
 			int id = timerId + startTime.get(Calendar.DAY_OF_WEEK);
-			System.out.println("attempting to create a system alarm with id: " + id + " for start");
 			Intent activateVibration = new Intent(parent, VibrateOnBroadcastReceiver.class); 
 			createSystemTimer(startTime.getTimeInMillis(), id, activateVibration);
 		}
 		for(Calendar endTime : endTimes){
 			int id = timerId + endTime.get(Calendar.DAY_OF_WEEK) + 10;
-			System.out.println("attempting to create a system alarm with id: " + id + " for stop");
 			Intent disableVibration = new Intent(parent, VibrateOffBroadcastReceiver.class);
 			createSystemTimer(endTime.getTimeInMillis(), id, disableVibration);
 		}
 	}
-	
+
 	/**
 	 * Cancel the services corresponding to the VibrateTimer object
 	 * @param vt VibrateTimer object to cancel
@@ -61,7 +59,6 @@ public final class VibrateTimerController {
 		List<Calendar> times = vt.getStartAlarmCalendars();
 		for(Calendar time : times){
 			int id = vt.getId() + time.get(Calendar.DAY_OF_WEEK);
-			System.out.println("deleting alarm with id " + id + " and " + (id+10));
 			PendingIntent pi = PendingIntent.getBroadcast(parent, id, 
 					new Intent(parent, VibrateOnBroadcastReceiver.class), 
 					PendingIntent.FLAG_UPDATE_CURRENT);
@@ -74,7 +71,7 @@ public final class VibrateTimerController {
 			am.cancel(pi);
 		}
 	}
-	
+
 	public List<VibrateTimer> getVibrateTimers() {
 		return datastore.getAllVibrateTimers();
 	}
@@ -90,7 +87,7 @@ public final class VibrateTimerController {
 				id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		am.setRepeating(AlarmManager.RTC, time, WEEK_MILLISECONDS, startVibrating); 
 	}
-	
+
 	/**
 	 * Generate a unique id for each alarm.
 	 * @param context
@@ -101,15 +98,15 @@ public final class VibrateTimerController {
 		SharedPreferences prefs = context.getSharedPreferences("idcounter", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
 		int counter = prefs.getInt("idcounter", -1);
-			if(counter == -1) {
-				counter = 0;
-				editor.putInt("idcounter", counter);
-				editor.commit();
-			} else {
-				counter = counter + 20;
-				editor.putInt("idcounter", counter);
-				editor.commit();
-			}
+		if(counter == -1) {
+			counter = 0;
+			editor.putInt("idcounter", counter);
+			editor.commit();
+		} else {
+			counter = counter + 20;
+			editor.putInt("idcounter", counter);
+			editor.commit();
+		}
 		return counter;
 	}
 }

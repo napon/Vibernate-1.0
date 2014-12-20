@@ -4,19 +4,23 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.napontaratan.vibratetimer.controller.VibrateTimerController;
 import com.napontaratan.vibratetimer.model.VibrateTimer;
 
 import android.os.Bundle;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.view.ContextMenu;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -24,13 +28,30 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	
+
 	private List<VibrateTimer> vibrateTimers;
 	private String[] days = new String[]{"Su ","Mo ","Tu ","We ","Th ","Fr ","Sa "};
 	private VibrateTimerController controller;
 	private static String SELECTED_TIMER = "selected_timer";
 	VibrateArrayAdapter vaa;
+	private ListView listViewVibrateTimers;
+	
 
+	/**
+	 * Google Analytics code
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
+	
 	/**
 	 * Main interface for the app
 	 * @author Daniel
@@ -44,25 +65,34 @@ public class MainActivity extends Activity {
 		vibrateTimers = controller.getVibrateTimers();
 		if(vibrateTimers == null) // no existing timers
 			vibrateTimers = new ArrayList<VibrateTimer>();
+
+		System.out.println(vibrateTimers.size());
+		listViewVibrateTimers = (ListView) findViewById(R.id.vibrates);
+		registerForContextMenu(listViewVibrateTimers);
+		vaa = new VibrateArrayAdapter(this, R.layout.vibrate, vibrateTimers);
+		listViewVibrateTimers.setAdapter(vaa);
+		setListViewMultiChoiceMode();
+		
+
 		System.out.println("number of alarms: " + vibrateTimers.size());
 
 		ListView listOfVibrates = (ListView) findViewById(R.id.vibrates);
 		vaa = new VibrateArrayAdapter(this, R.layout.vibrate, vibrateTimers);
 		listOfVibrates.setAdapter(vaa);
 		registerForContextMenu(listOfVibrates);
-		
+
 		/**
 		 * If the list is empty, display a message
 		 * !!! needs polishing
 		 * @author Napon
 		 */
 		TextView emptyView = new TextView(this);
-		 ((ViewGroup) listOfVibrates.getParent()).addView(emptyView);
+		((ViewGroup) listOfVibrates.getParent()).addView(emptyView);
 		emptyView.setText("Click the + button to add new timers!");
 		listOfVibrates.setEmptyView(emptyView);
-		
+
 		final Context currentActivity = this; // to pass into item click intent
-		
+
 		listOfVibrates.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int index,long arg3) {
@@ -77,51 +107,53 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
+		
 	}
+
 	
-	/**
-	 * Create a pop up menu when the user long-presses an alarm entry.
-	 * Menu items: Modify, Delete
-	 * @author Napon
-	 */
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
-		super.onCreateContextMenu(menu, v, menuInfo);
-		if(v.getId() == R.id.vibrates){
-			menu.add("Modify");
-		    menu.add("Delete");
-		}
-	}
-	
-	/**
-	 * Clicking on 'Modify' will launch a SetTimerActivity with the selected alarm
-	 * Clicking on 'Delete' will delete the alarm from the database and update the ListView
-	 * @author Napon
-	 */
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-		if(item.getTitle().equals("Modify")){
-			Intent i = new Intent(getApplicationContext(), SetTimerActivity.class);
-			try {
-				i.putExtra(SELECTED_TIMER, VibrateTimer.serialize(vibrateTimers.get(info.position)));
-				startActivity(i);
-				return true;
-			} catch (IOException e) {
-				System.out.println("IOException caught in onContextItemSelected in MainActivity");
-			}
-		}else {
-			controller.cancelAlarm(vibrateTimers.get(info.position), getApplicationContext());
-			vaa.clear();
-			List<VibrateTimer> lov = controller.getVibrateTimers();
-			for(VibrateTimer vt : lov){
-				vaa.add(vt);
-			}
-			vaa.notifyDataSetChanged();
-			return true;
-		}
-		return false;
-	}
+//	/**
+//	 * Create a pop up menu when the user long-presses an alarm entry.
+//	 * Menu items: Modify, Delete
+//	 * @author Napon
+//	 */
+//	@Override
+//	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+//		super.onCreateContextMenu(menu, v, menuInfo);
+//		if(v.getId() == R.id.vibrates){
+//			menu.add("Modify");
+//		    menu.add("Delete");
+//		}
+//	}
+//	
+//	/**
+//	 * Clicking on 'Modify' will launch a SetTimerActivity with the selected alarm
+//	 * Clicking on 'Delete' will delete the alarm from the database and update the ListView
+//	 * @author Napon
+//	 */
+//	@Override
+//	public boolean onContextItemSelected(MenuItem item) {
+//		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+//		if(item.getTitle().equals("Modify")){
+//			Intent i = new Intent(getApplicationContext(), SetTimerActivity.class);
+//			try {
+//				i.putExtra(SELECTED_TIMER, VibrateTimer.serialize(vibrateTimers.get(info.position)));
+//				startActivity(i);
+//				return true;
+//			} catch (IOException e) {
+//				System.out.println("IOException caught in onContextItemSelected in MainActivity");
+//			}
+//		}else {
+//			controller.cancelAlarm(vibrateTimers.get(info.position), getApplicationContext());
+//			vaa.clear();
+//			List<VibrateTimer> lov = controller.getVibrateTimers();
+//			for(VibrateTimer vt : lov){
+//				vaa.add(vt);
+//			}
+//			vaa.notifyDataSetChanged();
+//			return true;
+//		}
+//		return false;
+//	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,6 +162,60 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Contextual Action Bar - only available api > 11 
+	 * Edit multiple items at once
+	 * @author daniel
+	 */
+	@TargetApi(11)
+	private void setListViewMultiChoiceMode(){
+		listViewVibrateTimers.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+		listViewVibrateTimers.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+			private List<Integer> positions; // list of selected VibrateTimer with their respective position
+			@Override
+			public boolean onPrepareActionMode(ActionMode mode, Menu item) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+	
+			@Override
+			public void onDestroyActionMode(ActionMode mode) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+				positions = new ArrayList<Integer>();
+				MenuInflater menuInflater = mode.getMenuInflater();
+				menuInflater.inflate(R.menu.multiselectmode, menu);
+				mode.setTitle(listViewVibrateTimers.getCheckedItemCount() + " timer selected");
+				return true;
+			}
+			
+			@Override
+			public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+				switch(item.getItemId()){
+					case R.id.action_delete:
+						cancelAlarm(positions);
+						mode.finish();
+						return true;
+					default:
+						return this.onActionItemClicked(mode,item);
+				}
+			}
+			
+			@Override
+			public void onItemCheckedStateChanged(ActionMode mode, int position,
+					long id, boolean checked) {
+				if(checked) positions.add(position);
+				else positions.remove(position);
+				mode.setTitle(listViewVibrateTimers.getCheckedItemCount() + " timer selected");
+			}
+		});
+		
+	}
+	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
@@ -137,7 +223,7 @@ public class MainActivity extends Activity {
 		case R.id.action_addVibrate:
 			addVibrateTimer();
 			return true;
-		case R.id.action_settings:	// go to about page
+		case R.id.action_settings: // go to about page
 			Intent i = new Intent(this, About.class);
 			startActivity(i);
 			return true;
@@ -171,7 +257,7 @@ public class MainActivity extends Activity {
 			this.listOfVibrateTimers = vibrateTimers;
 			resourceId = customViewResourceId;
 		}
-		
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) context
@@ -199,12 +285,12 @@ public class MainActivity extends Activity {
 			return itemView;	
 		}
 	} 
-	
-	
-	
-	
+
+
+
+
 	// ========  HELPER METHODS ==========================
-	
+
 	/**
 	 * Convert startTime as Calendar into String with proper dateFormat
 	 * @param sDateFormat
@@ -236,10 +322,23 @@ public class MainActivity extends Activity {
 		}
 		return endTest;
 	}
+	
+	
+	/**
+	 * @param positions VibrateTimer's position in the list 
+	 * @author napon 
+	 */
+	
+	private void cancelAlarm(List<Integer>positions){
+		for(int pos: positions)
+			controller.cancelAlarm(vibrateTimers.get(pos), getApplicationContext());
+		vaa.clear();
+		List<VibrateTimer> lov = controller.getVibrateTimers();
+		for(VibrateTimer vt : lov){
+			vaa.add(vt);
+		}
+		vaa.notifyDataSetChanged();
+	}
+	
 
 } 
-
-
-
-
-

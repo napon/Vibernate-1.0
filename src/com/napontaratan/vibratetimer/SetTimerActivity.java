@@ -3,6 +3,7 @@ package com.napontaratan.vibratetimer;
 import java.io.IOException;
 import java.util.Calendar;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.napontaratan.vibratetimer.controller.VibrateTimerController;
 import com.napontaratan.vibratetimer.model.VibrateTimer;
 
@@ -21,6 +22,21 @@ public class SetTimerActivity extends Activity {
 
 	private static String SELECTED_TIMER = "selected_timer";
 	private VibrateTimer oldTimer = null;
+
+	/**
+	 * Google Analytics code
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
 	
 	/**
 	 * Create/Modify a VibrateTimer interface
@@ -48,14 +64,14 @@ public class SetTimerActivity extends Activity {
 		if (oldTimer != null) {
 			TimePicker start = (TimePicker) findViewById(R.id.startTimePicker);
 			TimePicker end = (TimePicker) findViewById(R.id.endTimePicker);
-			
+
 			Calendar startTime = oldTimer.getStartTime();
 			Calendar endTime = oldTimer.getEndTime();
 			start.setCurrentHour(startTime.get(Calendar.HOUR_OF_DAY));
 			start.setCurrentMinute(startTime.get(Calendar.MINUTE));
 			end.setCurrentHour(endTime.get(Calendar.HOUR_OF_DAY));
 			end.setCurrentMinute(endTime.get(Calendar.MINUTE));
-			
+
 
 			int[] buttonIds = new int[] { R.id.Sunday, R.id.Monday,
 					R.id.Tuesday, R.id.Wednesday, R.id.Thursday, R.id.Friday,
@@ -74,36 +90,36 @@ public class SetTimerActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				
+
 				// Create a new VibrateTimer object
 				Calendar start = generateCalendar(R.id.startTimePicker);
 				Calendar end = generateCalendar(R.id.endTimePicker);
 				boolean[] days = generateDays();
-				
-				
-				
+
+
+
 				if(!isWeekDaySet(days)) {
 					Toast.makeText(SetTimerActivity.this, "Please specify the days", Toast.LENGTH_SHORT).show();
-				
+
 				} else {
-				
-				int id = VibrateTimerController
-						.generateNextId(SetTimerActivity.this);
-				VibrateTimer vt = new VibrateTimer(start, end, days, id);
 
-				VibrateTimerController vtc = new VibrateTimerController(
-						SetTimerActivity.this);
-				vtc.setAlarm(vt, SetTimerActivity.this);
-				if (oldTimer != null) {
-					vtc.cancelAlarm(oldTimer, SetTimerActivity.this);
+					int id = VibrateTimerController
+							.generateNextId(SetTimerActivity.this);
+					VibrateTimer vt = new VibrateTimer(start, end, days, id);
+
+					VibrateTimerController vtc = new VibrateTimerController(
+							SetTimerActivity.this);
+					vtc.setAlarm(vt, SetTimerActivity.this);
+					if (oldTimer != null) {
+						vtc.cancelAlarm(oldTimer, SetTimerActivity.this);
+					}
+
+					// GO BACK
+					Intent intent = new Intent(SetTimerActivity.this, MainActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					startActivity(intent);
 				}
-
-				// GO BACK
-				Intent intent = new Intent(SetTimerActivity.this, MainActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
-			}
 			}
 		});
 
@@ -135,7 +151,7 @@ public class SetTimerActivity extends Activity {
 		cal.set(Calendar.MINUTE, tp.getCurrentMinute());
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		
+
 		return cal;
 	}
 
@@ -163,8 +179,8 @@ public class SetTimerActivity extends Activity {
 
 		return days;
 	}
-	
-	
+
+
 	private boolean isWeekDaySet(boolean [] days){
 		System.out.println("Incoming Days Status:" + days.length);
 		for(boolean day: days){

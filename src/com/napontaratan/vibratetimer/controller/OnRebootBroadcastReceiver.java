@@ -13,13 +13,11 @@ public class OnRebootBroadcastReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		VibrateTimerDB datastore = new VibrateTimerDB(context);
+		VibrateTimerDB datastore = VibrateTimerDB.getInstance(context);
 		VibrateTimerController controller = new VibrateTimerController(context);
-		System.out.println("reboot: setting back alarms");
 		List<VibrateTimer> timers = datastore.getAllVibrateTimers();
 		for(VibrateTimer vt : timers) {
 			controller.setAlarm(vt,context);
 		}
 	}
-
 }
